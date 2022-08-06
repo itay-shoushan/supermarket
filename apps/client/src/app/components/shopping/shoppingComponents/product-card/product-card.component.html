@@ -1,0 +1,17 @@
+<div class="card" style="width: 11rem;">
+    <img height="120px" src="/assets/shopping_main.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{cardTitle}}</h5>
+        <p class="card-text">Tnuva milk 1% fat</p>
+        <div class="addedToCart" *ngIf="!isInCart else elseBlock">
+            <button (click)="setAddToCart(this.cardID)" mat-button>add to cart</button>
+        </div>
+        <ng-template #elseBlock>
+            <div class="addedToCart">
+                <button [disabled]="productQuantity === 0" (click)="decrementQuantity()" mat-button>-</button>
+                <div>quantity:{{productQuantity}}</div>
+                <button (click)="incrementQuantity()" mat-button>+</button>
+            </div>
+        </ng-template>
+    </div>
+</div>

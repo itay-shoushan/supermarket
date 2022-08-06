@@ -1,0 +1,26 @@
+mat-grid-tile {
+    background: lightblue;
+}
+
+mat-grid-list {
+    margin: 10px;
+}
+
+.topConteiner {
+    margin-top: 40px;
+}
+
+.mainImg {
+    margin: auto;
+    width: 400px;
+    height: 300px;
+}
+
+.secondaryImg {
+    width: 350px;
+    height: 200px;
+}
+
+#details {
+    margin-bottom: 30px;
+}

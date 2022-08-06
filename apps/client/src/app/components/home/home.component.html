@@ -1,0 +1,64 @@
+<ng-container>
+    <mat-grid-list cols="3" gutterSize="20" rowHeight="92%">
+        <mat-grid-tile>
+            <div>
+                <h1>Registered ? </h1>
+                <form class="example-form">
+                    <div>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>User Name</mat-label>
+                            <input matInput placeholder="User Name" value="">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Password</mat-label>
+                            <input matInput placeholder="Password" value="">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button mat-raised-button color="primary">Login</button>
+                        <button mat-button>Sign Up</button>
+                    </div>
+                </form>
+                <div class="topConteiner" *ngIf="this.isUserLoggedIn">
+                    <button mat-button>Continue shopping / Start Shopping</button>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div id="details">
+                <h1>welcome to my site ! </h1>
+                <h3>here in our store you will have enjoy </h3>
+                <h3>high shopping experience</h3>
+                <img class="mainImg" src="/assets/shopping_main.jpg" alt="404">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div>
+                <div>
+                    <h3>num of products: {{this.numberOfProducts}} </h3>
+                    <h3>num of orders: {{this.numberOfOrders}} </h3>
+                </div>
+                <div>
+                    <img class="secondaryImg" src="/assets/shopping_main.jpg" alt="404">
+                </div>
+                <div class="topConteiner" *ngIf="this.isUserLoggedIn">
+                    <div *ngIf="this.userStatus === 0 ">
+                        <p>Welcome to your first shopping</p>
+                        <button mat-button>Start shopping</button>
+                    </div>
+                    <div *ngIf="this.userStatus === 1 ">
+                        <button mat-button>Welcome Back! Start shopping</button>
+                        <p>your last purchase - 1670$</p>
+                    </div>
+                    <div *ngIf="this.userStatus === 2 ">
+                        <p>you have an open cart ! </p>
+                        <p>current cart - 1560$</p>
+                        <button mat-button>Continue shopping current cart</button>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</ng-container>

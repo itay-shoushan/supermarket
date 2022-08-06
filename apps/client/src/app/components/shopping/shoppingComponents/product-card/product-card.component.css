@@ -1,0 +1,18 @@
+.card {
+    margin: 10px;
+    background-color: inherit;
+}
+
+.addedToCart {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.addedToCart button {
+    min-width: 30px;
+    text-align: center;
+    padding: inherit;
+}

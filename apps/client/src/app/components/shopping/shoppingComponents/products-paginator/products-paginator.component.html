@@ -1,0 +1,11 @@
+<div class="container">
+    <!-- <p>{{this.productsInCart | json}}</p> -->
+    <div class="row">
+        <div *ngFor="let h of products | paginate: {
+            itemsPerPage: this.pageSize,
+            currentPage: p}" class={{this.columnSize}}>
+            <app-product-card (addToCartOutput)="addToCart($event)" [cardID]="h" [cardTitle]="h"></app-product-card>
+        </div>
+    </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
