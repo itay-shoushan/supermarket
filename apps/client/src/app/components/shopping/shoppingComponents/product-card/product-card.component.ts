@@ -6,9 +6,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent implements OnInit {
-  @Input() cardTitle: string = 'first title';
-  @Input() cardID: string = '';
-  @Output() addToCartOutput = new EventEmitter<string>()
+  @Input() product_name: string;
+  @Input() product_id: number;
+  @Input() product_image: string;
+  @Input() product_price: number;
+  @Output() addToCartOutput = new EventEmitter<number>()
 
   public isInCart: boolean = false
   public productQuantity: number = 1
@@ -16,9 +18,10 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  setAddToCart(cardID:string) {
-    this.isInCart = true;
-    this.addToCartOutput.emit(cardID)
+  addToCart(product_id: number) {
+    console.log(product_id);
+    // this.isInCart = true;
+    // this.addToCartOutput.emit(cardID)
   }
   incrementQuantity() {
     return this.productQuantity++

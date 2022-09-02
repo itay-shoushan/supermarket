@@ -23,6 +23,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductsPaginatorComponent } from './components/shopping/shoppingComponents/products-paginator/products-paginator.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderComponent } from './components/order/order.component';
+import { LoginComponent } from './components/login/login.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { ManagementComponent } from './components/management/management.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,9 @@ import { OrderComponent } from './components/order/order.component';
     ShoppingComponent,
     ProductCardComponent,
     ProductsPaginatorComponent,
-    OrderComponent
+    OrderComponent,
+    LoginComponent,
+    ManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -50,9 +56,14 @@ import { OrderComponent } from './components/order/order.component';
     NgbModule,
     MatCardModule,
     MatPaginatorModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

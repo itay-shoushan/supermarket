@@ -1,10 +1,10 @@
 <div class="card" style="width: 11rem;">
-    <img height="120px" src="/assets/shopping_main.jpg" class="card-img-top" alt="...">
+    <img height="120px" src={{product_image}} class="card-img-top" alt="...">
     <div class="card-body">
-        <h5 class="card-title">{{cardTitle}}</h5>
-        <p class="card-text">Tnuva milk 1% fat</p>
+        <h5 class="card-title">{{product_name}}</h5>
+        <p class="card-text">{{product_price | currency}}</p>
         <div class="addedToCart" *ngIf="!isInCart else elseBlock">
-            <button (click)="setAddToCart(this.cardID)" mat-button>add to cart</button>
+            <button (click)="addToCart(this.product_id)" mat-button>add to cart</button>
         </div>
         <ng-template #elseBlock>
             <div class="addedToCart">
