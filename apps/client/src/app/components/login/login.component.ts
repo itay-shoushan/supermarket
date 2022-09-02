@@ -14,9 +14,11 @@ export class LoginComponent implements OnInit {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
+  private _userDeails$ = new BehaviorSubject<boolean>(false);
+  userDeails$ = this._userDeails$.asObservable();
+
   constructor(private authService: AuthService, private route: Router) {
     const currentToken = localStorage.getItem("token");
-    console.log(!!currentToken);
     this._isLoggedIn$.next(!!currentToken);
   }
 
@@ -29,7 +31,6 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(currentUser).subscribe({
       error: (ex: any) => {
-        console.log(ex);
         alert(ex?.error?.message)
       },
       next: (result: any) => {

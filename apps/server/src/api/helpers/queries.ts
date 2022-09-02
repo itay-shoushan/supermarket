@@ -45,6 +45,9 @@ HAVING c.id = ?;`
 export function addProductToCartQuery(): string {
     return `INSERT INTO shopping.cart_details (product_id, quantity, total_price, cart_id) VALUES (?, ?, ?, ?);`
 }
+export function createCartToUserQuery(): string {
+    return `INSERT INTO shopping.carts (user_id) VALUES (?);`
+}
 export function updateProductQuantityQuery(): string {
     return `UPDATE shopping.cart_details 
     SET 

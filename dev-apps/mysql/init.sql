@@ -34,8 +34,8 @@ CREATE TABLE `cart_details` (
   KEY `product_id_cart_idx` (`product_id`),
   KEY `cart_id_key_idx` (`cart_id`),
   CONSTRAINT `cart_id_key` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_id_cart` FOREIGN KEY (`product_id`) REFERENCES `products_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `product_id_cart` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `cart_details` (
 
 LOCK TABLES `cart_details` WRITE;
 /*!40000 ALTER TABLE `cart_details` DISABLE KEYS */;
-INSERT INTO `cart_details` VALUES (1,1,2,10,3),(2,2,1,2,3),(3,3,1,3,3);
+INSERT INTO `cart_details` VALUES (1,1,2,10,3),(2,2,1,2,3),(3,3,1,3,3),(17,7,1,32,4);
 /*!40000 ALTER TABLE `cart_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-27 10:14:36
+-- Dump completed on 2022-09-02 17:27:41

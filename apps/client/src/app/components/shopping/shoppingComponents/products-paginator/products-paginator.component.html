@@ -4,8 +4,7 @@
         <div *ngFor="let product of products | paginate: {
             itemsPerPage: this.pageSize,
             currentPage: p}" class={{this.columnSize}}>
-            <app-product-card [product_image]="product.picture" [product_price]="product.price"
-                [product_id]="product.id" [product_name]="product.name"></app-product-card>
+            <app-product-card [cart_id]="this.cart_id" [product]="product"></app-product-card>
         </div>
     </div>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>

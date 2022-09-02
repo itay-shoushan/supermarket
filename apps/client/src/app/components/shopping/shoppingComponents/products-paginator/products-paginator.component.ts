@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { IProduct } from 'src/app/models/product.model';
+import { IProduct, IProductInCart } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-products-paginator',
@@ -11,14 +11,13 @@ export class ProductsPaginatorComponent implements OnInit {
   @Input() columnSize: string = '';
   @Input() pageSize: number = 12;
   @Input() products: IProduct[] = [];
-  // @Output() productsInCartOutput = new EventEmitter<IProduct>();
   p: number = 1;
 
-  constructor() { }
+  @Input() cart_id:number;
 
-  // addToCart(val:IProduct){
-    // this.productsInCartOutput.emit(val)
-  // }
+  constructor() { 
+
+  }
   ngOnInit(): void {
   }
 

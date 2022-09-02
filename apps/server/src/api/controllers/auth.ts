@@ -15,7 +15,7 @@ export async function loginHandler(req: Request, res: Response, next: NextFuncti
       return res.status(401).json({ message: "user not authorized" });
     delete currentUser.password;
     const token = signToken(currentUser);
-    return res.status(200).json({ token, email: currentUser?.email, message: "user logged in successfully" });
+    return res.status(200).json({ token, user_id: currentUser?.id, user_name: currentUser?.first_name, message: "user logged in successfully" });
   } catch (error) {
     return next(new Error("loginHandler error:" + error?.message));
   }

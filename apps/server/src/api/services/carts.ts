@@ -1,5 +1,5 @@
 import { getConnection } from "../../config/database_config";
-import { addProductToCartQuery, closeOrderQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery } from "../helpers/queries";
+import { addProductToCartQuery, closeOrderQuery, createCartToUserQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery } from "../helpers/queries";
 import { ICart, ICartDetailsResponse } from "../models/cart_details";
 import { IOrder } from "../models/order";
 
@@ -13,20 +13,25 @@ export async function getCartByUserIDService(user_id: number): Promise<ICart> {
     const [result] = await getConnection().execute(query, [user_id]);
     return result[0];
 }
+export async function createCartToUserService(user_id: number): Promise<any> {
+    const query = createCartToUserQuery();
+    const [result] = await getConnection().execute(query, [user_id]);
+    return result;
+}
 export async function addProductToCartService(product_id: number, quantity: number, total_price: number, cart_id: number): Promise<any> {
     const query = addProductToCartQuery();
     const [result] = await getConnection().execute(query, [product_id, quantity, total_price, cart_id]);
-    return result[0];
+    return result;
 }
 export async function updateQuantityService(quantity: number, total_price: number, product_id: number, cart_id: number): Promise<any> {
     const query = updateProductQuantityQuery();
     const [result] = await getConnection().execute(query, [quantity, total_price, product_id, cart_id]);
-    return result[0];
+    return result;
 }
 export async function removeProductFromCartService(cart_id: number, product_id: number): Promise<any> {
     const query = removeProductToCartQuery();
     const [result] = await getConnection().execute(query, [cart_id, product_id]);
-    return result[0];
+    return result;
 }
 export async function orderCartService(orderDetailsObject: IOrder): Promise<any> {
     const query = orderCartQuery();

@@ -1,6 +1,9 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { IProduct } from 'src/app/models/product.model';
+import { ICartDetail } from 'src/app/models/cart.model';
+import { IProduct, IProductInCart } from 'src/app/models/product.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -10,31 +13,62 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class ShoppingComponent implements OnInit {
   // public cartIsOpen: boolean = true
-  public cart: IProduct[] = [];
-  // public products: string[] = ['header1', 'header2', 'header3', 'header4', 'header5', 'header6', 'header7', 'header8', 'header9', 'header10', 'header11', 'header12', 'header13', 'header14', 'header15', 'header16', 'header17', 'header18', 'header19', 'header20', 'header21', 'header22', 'header23', 'header24', 'header25', 'header26', 'header27', 'header28', 'header29']
+  public cart: IProductInCart[] = [];
   public products: IProduct[] = []
+  private currentBuyerID: number;
+  public currentCartID: number;
+  public currentCartDetails: ICartDetail[];
 
-  constructor(private productsService: ProductsService) {
+  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService) {
+    const user = this.authService.getUserData();
+    this.currentBuyerID = user?.id;
     this.productsService.getProducts().subscribe({
       error: (ex: any) => {
         alert(ex?.error?.message);
       },
       next: (result: any) => {
         this.products = result?.products;
-      },
-      complete: () => {
-
       }
     })
-  }
+    if (this.currentBuyerID) {
+      this.cartService.getCart(this.currentBuyerID).subscribe({
+        error: (ex: any) => {
+          alert(ex?.error?.message);
+        },
+        next: (result: any) => {
+          this.currentCartID = result?.cart?.id;
+          this.cartService.getCartDetails(result?.cart?.id).subscribe({
+            error: (ex: any) => {
+              console.log(ex);
+              // alert(ex?.error?.message);
+            },
+            next: (response: any) => {
+              this.currentCartDetails = response?.cartDetails
+            },
+            complete: () => {
+              localStorage.setItem("cartDetails", JSON.stringify(this.currentCartDetails))
+            }
+          })
+        }
+      })
+      // if (this.currentCartID) {
+      //   this.cartService.getCartDetails(this.currentCartID).subscribe({
+      //     error: (ex: any) => {
+      //       console.log(ex);
+      //       alert(ex?.error?.message);
+      //     },
+      //     next: (response: any) => {
+      //       this.currentCartDetails = response?.cartDetails
+      //     },
+      //     complete: () => {
+      //       localStorage.setItem("cartDetails", JSON.stringify(this.currentCartDetails))
+      //     }
+      //   })
+      // }
 
-  ngOnInit(): void {
+    }
   }
-  // setCartLocation(value: boolean) {
-  //   this.cartIsOpen = value;
-  // }
-  addToCart(val: IProduct) {
-    this.cart.push(val)
+  ngOnInit(): void {
   }
 
 }

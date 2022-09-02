@@ -6,10 +6,10 @@
         <button routerLink="shopping" mat-button>Shopping</button>
     </div>
     <span class="example-spacer"></span>
-    <div class="example-nav">
-        <span>Hello user !</span>
+    <div *ngIf="current_user" class="example-nav">
+        <span>Hello {{current_user | titlecase}}</span>
     </div>
     <div class="example-nav">
-        <span>contant - email sopping@gmail.com</span>
+        <span>connect to us - email sopping@gmail.com</span>
     </div>
 </mat-toolbar>

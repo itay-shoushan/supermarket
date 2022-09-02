@@ -1,37 +1,99 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { unAuthError } from 'src/app/guards/helper';
+import { IProduct, IProductInCart } from 'src/app/models/product.model';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css']
 })
-export class ProductCardComponent implements OnInit {
-  @Input() product_name: string;
-  @Input() product_id: number;
-  @Input() product_image: string;
-  @Input() product_price: number;
-  @Output() addToCartOutput = new EventEmitter<number>()
+export class ProductCardComponent implements OnInit, OnChanges {
+  @Input() product: IProduct
+  @Input() cart_id: number;
+  public product_quantity: number = 0;
+  public isInCart: boolean = false;
 
-  public isInCart: boolean = false
-  public productQuantity: number = 1
-  constructor() { }
+  // @Output() add_to_cart_output = new EventEmitter<IProductInCart>();
+
+  constructor(private cartService: CartService, private route: Router) {
+  }
 
   ngOnInit(): void {
   }
-  addToCart(product_id: number) {
-    console.log(product_id);
-    // this.isInCart = true;
-    // this.addToCartOutput.emit(cardID)
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+
+    console.log(localStorage.getItem("cartDetails"));
   }
-  incrementQuantity() {
-    return this.productQuantity++
-  }
-  decrementQuantity() {
-    if (this.productQuantity === 0) return
-    if (this.productQuantity === 1) {
-      return this.isInCart = false
+  addToCart(product: IProduct) {
+    this.product_quantity++;
+    this.isInCart = true;
+    const current_product: IProductInCart = {
+      product: product,
+      quantity: this.product_quantity
     }
-    return this.productQuantity--
+    // this.add_to_cart_output.emit(current_product);
+    this.cartService.addProductToCart(current_product, this.cart_id).subscribe({
+      error: (ex: any) => {
+        console.log(ex);
+        alert(ex?.error?.message)
+      },
+      next: (response: any) => {
+        alert(response?.message);
+      }
+    })
+  }
+  incrementQuantity(product: IProduct) {
+    this.product_quantity++;
+    const current_product: IProductInCart = {
+      product: product,
+      quantity: this.product_quantity
+    }
+    // this.add_to_cart_output.emit(current_product);
+    this.cartService.updateProductQuantity(current_product, this.cart_id).subscribe({
+      error: (ex: any) => {
+        console.log(ex);
+        alert(ex?.error?.message)
+      },
+      next: (response: any) => {
+        alert(response?.message);
+      }
+    })
+  }
+  decrementQuantity(product: IProduct) {
+    if (this.product_quantity === 0) return alert("error please try again");
+    else if (this.product_quantity === 1) {
+      this.isInCart = false;
+      this.product_quantity--;
+      this.cartService.removeProductQuantity(product, this.cart_id).subscribe({
+        error: (ex: any) => {
+          console.log(ex);
+          alert(ex?.error?.message)
+        },
+        next: (response: any) => {
+          alert(response?.message);
+        }
+      })
+      return
+    } else if (this.product_quantity > 1) {
+      this.product_quantity--;
+      const current_product: IProductInCart = {
+        product: product,
+        quantity: this.product_quantity
+      }
+      this.cartService.updateProductQuantity(current_product, this.cart_id).subscribe({
+        error: (ex: any) => {
+          console.log(ex);
+          alert(ex?.error?.message)
+        },
+        next: (response: any) => {
+          alert(response?.message);
+        }
+      })
+      return
+    } else alert("error please try again");
   }
 
 }

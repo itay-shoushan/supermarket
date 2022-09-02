@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUserLogin, IUserRegister } from '../models/user.model';
+import { parseTokenData } from './auth.service.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,15 @@ export class AuthService {
     return localStorage.getItem("token") || ''
   }
   isAdmin() {
-    const loginToken = localStorage.getItem("token") || '';
-    const _extractedToken = loginToken.split('.')[1];
-    const _atobData = atob(_extractedToken);
-    const _finalData = JSON.parse(_atobData);
-    if (_finalData?.data?.role === "admin") return true;
+    const data = parseTokenData();
+    if (data?.role === "admin") return true;
     else {
       alert("you dont have access");
       return false
     }
+  }
+  getUserData() {
+    const data = parseTokenData();
+    return data
   }
 }

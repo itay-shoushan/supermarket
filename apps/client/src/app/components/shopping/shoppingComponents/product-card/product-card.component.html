@@ -1,16 +1,16 @@
 <div class="card" style="width: 11rem;">
-    <img height="120px" src={{product_image}} class="card-img-top" alt="...">
+    <img height="120px" src={{product.picture}} class="card-img-top" alt="...">
     <div class="card-body">
-        <h5 class="card-title">{{product_name}}</h5>
-        <p class="card-text">{{product_price | currency}}</p>
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">{{product.price | currency}}</p>
         <div class="addedToCart" *ngIf="!isInCart else elseBlock">
-            <button (click)="addToCart(this.product_id)" mat-button>add to cart</button>
+            <button (click)="addToCart(product)" mat-button>add to cart</button>
         </div>
         <ng-template #elseBlock>
             <div class="addedToCart">
-                <button [disabled]="productQuantity === 0" (click)="decrementQuantity()" mat-button>-</button>
-                <div>quantity:{{productQuantity}}</div>
-                <button (click)="incrementQuantity()" mat-button>+</button>
+                <button [disabled]="product_quantity === 0" (click)="decrementQuantity(product)" mat-button>-</button>
+                <div>quantity:{{product_quantity}}</div>
+                <button (click)="incrementQuantity(product)" mat-button>+</button>
             </div>
         </ng-template>
     </div>

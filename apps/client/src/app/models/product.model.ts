@@ -5,3 +5,7 @@ export interface IProduct {
     price: number,
     picture: string,
 }
+export interface IProductInCart {
+    product: IProduct,
+    quantity: number,
+}
