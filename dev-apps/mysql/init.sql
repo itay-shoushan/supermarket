@@ -190,7 +190,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (211455673,'ziv','ashkenazi','ziv@ash.com','1234','admin',NULL,NULL),(244134678,'or','doron','or@dor.com','1234','viewer','rishon','harav kapah 5');
+INSERT INTO `users` VALUES (211455673,'ziv','ashkenazi','ziv@ash.com','123456','admin',NULL,NULL),(244134678,'or','doron','or@dor.com','123456','viewer','rishon','harav kapah 5');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
