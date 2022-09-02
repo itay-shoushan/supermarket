@@ -9,7 +9,7 @@ import { CartService } from 'src/app/services/cart.service';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css']
 })
-export class ProductCardComponent implements OnInit, OnChanges {
+export class ProductCardComponent implements OnInit {
   @Input() product: IProduct
   @Input() cart_id: number;
   public product_quantity: number = 0;
@@ -18,14 +18,10 @@ export class ProductCardComponent implements OnInit, OnChanges {
   // @Output() add_to_cart_output = new EventEmitter<IProductInCart>();
 
   constructor(private cartService: CartService, private route: Router) {
+
   }
 
   ngOnInit(): void {
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-
-    console.log(localStorage.getItem("cartDetails"));
   }
   addToCart(product: IProduct) {
     this.product_quantity++;

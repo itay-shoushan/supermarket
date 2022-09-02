@@ -12,7 +12,6 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./shopping.component.css']
 })
 export class ShoppingComponent implements OnInit {
-  // public cartIsOpen: boolean = true
   public cart: IProductInCart[] = [];
   public products: IProduct[] = []
   private currentBuyerID: number;
@@ -44,28 +43,10 @@ export class ShoppingComponent implements OnInit {
             },
             next: (response: any) => {
               this.currentCartDetails = response?.cartDetails
-            },
-            complete: () => {
-              localStorage.setItem("cartDetails", JSON.stringify(this.currentCartDetails))
             }
           })
         }
       })
-      // if (this.currentCartID) {
-      //   this.cartService.getCartDetails(this.currentCartID).subscribe({
-      //     error: (ex: any) => {
-      //       console.log(ex);
-      //       alert(ex?.error?.message);
-      //     },
-      //     next: (response: any) => {
-      //       this.currentCartDetails = response?.cartDetails
-      //     },
-      //     complete: () => {
-      //       localStorage.setItem("cartDetails", JSON.stringify(this.currentCartDetails))
-      //     }
-      //   })
-      // }
-
     }
   }
   ngOnInit(): void {
