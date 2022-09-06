@@ -27,6 +27,10 @@ import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ManagementComponent } from './components/management/management.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CartItemComponent } from './components/cart/cartItem/cart-item/cart-item.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,9 @@ import { ManagementComponent } from './components/management/management.componen
     ProductsPaginatorComponent,
     OrderComponent,
     LoginComponent,
-    ManagementComponent
+    ManagementComponent,
+    CartComponent,
+    CartItemComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,9 @@ import { ManagementComponent } from './components/management/management.componen
     MatCardModule,
     MatPaginatorModule,
     NgxPaginationModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDividerModule,
+    ScrollingModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

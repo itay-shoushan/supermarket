@@ -12,7 +12,7 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./shopping.component.css']
 })
 export class ShoppingComponent implements OnInit {
-  public cart: IProductInCart[] = [];
+  // public cart: IProductInCart[] = [];
   public products: IProduct[] = []
   private currentBuyerID: number;
   public currentCartID: number;

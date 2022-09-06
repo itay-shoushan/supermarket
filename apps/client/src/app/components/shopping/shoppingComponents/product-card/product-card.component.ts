@@ -37,7 +37,7 @@ export class ProductCardComponent implements OnInit {
         alert(ex?.error?.message)
       },
       next: (response: any) => {
-        alert(response?.message);
+        // alert(response?.message);
       }
     })
   }
@@ -54,7 +54,7 @@ export class ProductCardComponent implements OnInit {
         alert(ex?.error?.message)
       },
       next: (response: any) => {
-        alert(response?.message);
+        // alert(response?.message);
       }
     })
   }
@@ -69,7 +69,7 @@ export class ProductCardComponent implements OnInit {
           alert(ex?.error?.message)
         },
         next: (response: any) => {
-          alert(response?.message);
+          // alert(response?.message);
         }
       })
       return
@@ -85,7 +85,7 @@ export class ProductCardComponent implements OnInit {
           alert(ex?.error?.message)
         },
         next: (response: any) => {
-          alert(response?.message);
+          // alert(response?.message);
         }
       })
       return

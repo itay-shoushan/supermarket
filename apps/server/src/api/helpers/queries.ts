@@ -30,17 +30,17 @@ WHERE
 }
 export function getCartDetailsByCartIDQuery(): string {
     return `SELECT 
-    c.id AS cart_id,
+    cd.cart_id AS cart_id,
     cd.product_id,
+    p.name,
+    p.price,
     cd.quantity,
-    cd.total_price,
-    c.created_at,
-    c.user_id
+    cd.total_price
 FROM
     shopping.cart_details cd
         JOIN
-    shopping.carts c ON cd.cart_id = c.id
-HAVING c.id = ?;`
+    shopping.products p ON cd.product_id = p.id
+HAVING cd.cart_id = ?;`
 }
 export function addProductToCartQuery(): string {
     return `INSERT INTO shopping.cart_details (product_id, quantity, total_price, cart_id) VALUES (?, ?, ?, ?);`
