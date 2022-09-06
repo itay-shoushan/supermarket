@@ -23,72 +23,56 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  addToCart(product: IProduct) {
+  async addToCart(product: IProduct) {
     this.product_quantity++;
     this.isInCart = true;
     const current_product: IProductInCart = {
       product: product,
       quantity: this.product_quantity
     }
-    // this.add_to_cart_output.emit(current_product);
-    this.cartService.addProductToCart(current_product, this.cart_id).subscribe({
-      error: (ex: any) => {
-        console.log(ex);
-        alert(ex?.error?.message)
-      },
-      next: (response: any) => {
-        // alert(response?.message);
-      }
-    })
+    try {
+      const response = await this.cartService.addProductToCart(current_product, this.cart_id);
+      alert(response?.message)
+    } catch (ex: any) {
+      ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
+    }
   }
-  incrementQuantity(product: IProduct) {
+  async incrementQuantity(product: IProduct) {
     this.product_quantity++;
     const current_product: IProductInCart = {
       product: product,
       quantity: this.product_quantity
     }
-    // this.add_to_cart_output.emit(current_product);
-    this.cartService.updateProductQuantity(current_product, this.cart_id).subscribe({
-      error: (ex: any) => {
-        console.log(ex);
-        alert(ex?.error?.message)
-      },
-      next: (response: any) => {
-        // alert(response?.message);
-      }
-    })
+    try {
+      const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
+      alert(response?.message)
+    } catch (ex: any) {
+      ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
+    }
   }
-  decrementQuantity(product: IProduct) {
+  async decrementQuantity(product: IProduct) {
     if (this.product_quantity === 0) return alert("error please try again");
     else if (this.product_quantity === 1) {
       this.isInCart = false;
       this.product_quantity--;
-      this.cartService.removeProductQuantity(product, this.cart_id).subscribe({
-        error: (ex: any) => {
-          console.log(ex);
-          alert(ex?.error?.message)
-        },
-        next: (response: any) => {
-          // alert(response?.message);
-        }
-      })
-      return
+      try {
+        const response = await this.cartService.removeProduct(product, this.cart_id);
+        alert(response?.message);
+      } catch (ex: any) {
+        ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
+      }
     } else if (this.product_quantity > 1) {
       this.product_quantity--;
       const current_product: IProductInCart = {
         product: product,
         quantity: this.product_quantity
       }
-      this.cartService.updateProductQuantity(current_product, this.cart_id).subscribe({
-        error: (ex: any) => {
-          console.log(ex);
-          alert(ex?.error?.message)
-        },
-        next: (response: any) => {
-          // alert(response?.message);
-        }
-      })
-      return
+      try {
+        const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
+        alert(response?.message)
+      } catch (ex: any) {
+        ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
+      }
     } else alert("error please try again");
   }
 

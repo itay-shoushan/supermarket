@@ -9,7 +9,7 @@ export async function getCartDetailsByCartIDHandler(req: Request, res: Response,
         const currentCart = await isCartExist(cart_id);
         if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
         const cartDetails = await getCartDetailsByIDService(cart_id);
-        if (cartDetails?.length === 0) return res.status(400).json({ message: "cart is empty" });
+        if (cartDetails?.length === 0) return res.status(204).json({ message: "cart is empty", cartDetails: [] });
         else return res.status(200).json({ message: "ok", cartDetails })
     } catch (error) {
         return next(new Error("getCartDetailsByCartIDHandler" + error?.message));
