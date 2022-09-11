@@ -59,11 +59,11 @@ export class CartService {
     return promise
   }
 
-  async removeProduct(product: IProduct, cart_id: number): Promise<any> {
+  async removeProduct(product_id: number, cart_id: number): Promise<any> {
     const cartUrl = `${this.serverUrl}/carts/remove_from_cart`;
     const promise = await firstValueFrom(this.http.delete(`${cartUrl}/${cart_id}`, {
       body: {
-        product_id: product.id
+        product_id: product_id
       }
     }))
     await this.getCartDetails(cart_id);

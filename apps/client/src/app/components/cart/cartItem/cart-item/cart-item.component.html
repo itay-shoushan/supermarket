@@ -1,3 +1,6 @@
-<p>name: {{cart_product.name}}</p>
-<p>price: {{cart_product.price | currency}}, quantity:{{cart_product.quantity}}, total:{{cart_product.total_price |
-    currency}}</p>
+<div>
+    <p>name: {{cart_product.name}}</p>
+    <p>price: {{cart_product.price | currency}}, quantity:{{cart_product.quantity}}, total:{{cart_product.total_price |
+        currency}} <button (click)="removeProduct(cart_product)" mat-button color="warn">delete</button> </p>
+
+</div>

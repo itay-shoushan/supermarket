@@ -28,7 +28,7 @@ export class ProductCardComponent implements OnInit {
     this.isInCart = true;
     const current_product: IProductInCart = {
       product: product,
-      quantity: this.product_quantity
+      quantity: 1
     }
     try {
       const response = await this.cartService.addProductToCart(current_product, this.cart_id);
@@ -36,40 +36,23 @@ export class ProductCardComponent implements OnInit {
       ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
     }
   }
-  async incrementQuantity(product: IProduct) {
-    this.product_quantity++;
-    const current_product: IProductInCart = {
-      product: product,
-      quantity: this.product_quantity
-    }
-    try {
-      const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
-    } catch (ex: any) {
-      ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
-    }
-  }
   async decrementQuantity(product: IProduct) {
     if (this.product_quantity === 0) return alert("error please try again");
-    else if (this.product_quantity === 1) {
+    if (this.product_quantity === 1) {
       this.isInCart = false;
-      this.product_quantity--;
-      try {
-        const response = await this.cartService.removeProduct(product, this.cart_id);
-      } catch (ex: any) {
-        ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
-      }
-    } else if (this.product_quantity > 1) {
-      this.product_quantity--;
+    }
+    this.product_quantity--;
+    try {
       const current_product: IProductInCart = {
         product: product,
-        quantity: this.product_quantity
+        quantity: -1
       }
-      try {
-        const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
-      } catch (ex: any) {
-        ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
-      }
-    } else alert("error please try again");
+      const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      alert("error")
+    }
   }
 
 }

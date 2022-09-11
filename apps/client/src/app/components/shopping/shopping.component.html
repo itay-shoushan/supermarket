@@ -13,17 +13,22 @@
                     <app-categories [selectedCategory]="this.selectedCategory"></app-categories>
                 </div>
                 <div class="row">
-                    <form class="example-form">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>Search prouduct</mat-label>
-                            <input type="text" matInput [formControl]="searchProductFormControl"
-                                placeholder="Search product">
-                            <button *ngIf="searchProductFormControl.value" matSuffix mat-icon-button aria-label="Clear"
-                                (click)="searchProductFormControl.setValue('')">
-                                <mat-icon>close</mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </form>
+                    <div class="col-6">
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Search prouduct</mat-label>
+                                <input type="text" matInput [formControl]="searchProductFormControl"
+                                    placeholder="Search product">
+                                <button *ngIf="searchProductFormControl.value" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="searchProductFormControl.setValue('')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </form>
+                    </div>
+                    <!-- <div class="col-2">
+                        clear categories
+                    </div> -->
                     <!-- <mat-form-field class="example-form-field" appearance="fill">
                         <mat-label>Search prouduct</mat-label>
                         <input matInput type="text" #searchInp [(ngModel)]="searchProductInput">
