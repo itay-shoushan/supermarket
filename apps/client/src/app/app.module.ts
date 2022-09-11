@@ -31,6 +31,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart/cartItem/cart-item/cart-item.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     LoginComponent,
     ManagementComponent,
     CartComponent,
-    CartItemComponent
+    CartItemComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

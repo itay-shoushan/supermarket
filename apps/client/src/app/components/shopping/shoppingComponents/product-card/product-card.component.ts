@@ -23,73 +23,36 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  addToCart(product: IProduct) {
+  async addToCart(product: IProduct) {
     this.product_quantity++;
     this.isInCart = true;
     const current_product: IProductInCart = {
       product: product,
-      quantity: this.product_quantity
+      quantity: 1
     }
-    // this.add_to_cart_output.emit(current_product);
-    this.cartService.addProductToCart(current_product, this.cart_id).subscribe({
-      error: (ex: any) => {
-        console.log(ex);
-        alert(ex?.error?.message)
-      },
-      next: (response: any) => {
-        // alert(response?.message);
-      }
-    })
-  }
-  incrementQuantity(product: IProduct) {
-    this.product_quantity++;
-    const current_product: IProductInCart = {
-      product: product,
-      quantity: this.product_quantity
+    try {
+      const response = await this.cartService.addProductToCart(current_product, this.cart_id);
+    } catch (ex: any) {
+      ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
     }
-    // this.add_to_cart_output.emit(current_product);
-    this.cartService.updateProductQuantity(current_product, this.cart_id).subscribe({
-      error: (ex: any) => {
-        console.log(ex);
-        alert(ex?.error?.message)
-      },
-      next: (response: any) => {
-        // alert(response?.message);
-      }
-    })
   }
-  decrementQuantity(product: IProduct) {
+  async decrementQuantity(product: IProduct) {
     if (this.product_quantity === 0) return alert("error please try again");
-    else if (this.product_quantity === 1) {
+    if (this.product_quantity === 1) {
       this.isInCart = false;
-      this.product_quantity--;
-      this.cartService.removeProductQuantity(product, this.cart_id).subscribe({
-        error: (ex: any) => {
-          console.log(ex);
-          alert(ex?.error?.message)
-        },
-        next: (response: any) => {
-          // alert(response?.message);
-        }
-      })
-      return
-    } else if (this.product_quantity > 1) {
-      this.product_quantity--;
+    }
+    this.product_quantity--;
+    try {
       const current_product: IProductInCart = {
         product: product,
-        quantity: this.product_quantity
+        quantity: -1
       }
-      this.cartService.updateProductQuantity(current_product, this.cart_id).subscribe({
-        error: (ex: any) => {
-          console.log(ex);
-          alert(ex?.error?.message)
-        },
-        next: (response: any) => {
-          // alert(response?.message);
-        }
-      })
-      return
-    } else alert("error please try again");
+      const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      alert("error")
+    }
   }
 
 }

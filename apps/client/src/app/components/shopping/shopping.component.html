@@ -6,12 +6,48 @@
     <div class="row" style="height: 100%;">
         <div style="background-color: aqua;" class="col-4" *ngIf="currentCartID">
             <app-cart [cart_id]="currentCartID"></app-cart>
-            <!-- <h1>{{cart|json}}</h1> -->
         </div>
         <div style="background-color: yellow;" class="col-8">
-            <app-products-paginator [cart_id]="this.currentCartID" [products]="products" [pageSize]="8"
-                [columnSize]="'col-3'">
-            </app-products-paginator>
+            <div class="container">
+                <div class="row">
+                    <app-categories [selectedCategory]="this.selectedCategory"></app-categories>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Search prouduct</mat-label>
+                                <input type="text" matInput [formControl]="searchProductFormControl"
+                                    placeholder="Search product">
+                                <button *ngIf="searchProductFormControl.value" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="searchProductFormControl.setValue('')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </form>
+                    </div>
+                    <!-- <div class="col-2">
+                        clear categories
+                    </div> -->
+                    <!-- <mat-form-field class="example-form-field" appearance="fill">
+                        <mat-label>Search prouduct</mat-label>
+                        <input matInput type="text" #searchInp [(ngModel)]="searchProductInput">
+                        <button *ngIf="searchProductInput" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="searchProductInput=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field> -->
+                </div>
+                <div class="row" *ngIf="!((products$|async|json)==='[]'); else elseBlock">
+                    <app-products-paginator [cart_id]="this.currentCartID" [products]="(products$|async) || []"
+                        [pageSize]="8" [columnSize]="'col-3'">
+                    </app-products-paginator>
+                </div>
+                <ng-template #elseBlock>
+                    no products to find
+                </ng-template>
+            </div>
+
         </div>
     </div>
     <!-- <div *ngIf="cartIsOpen; else elseBlock" class="row">

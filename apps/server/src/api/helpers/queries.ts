@@ -64,6 +64,9 @@ export function removeProductToCartQuery(): string {
 export function isCartExistQuery(): string {
     return `SELECT * FROM shopping.carts WHERE id = ? AND status = 1;`
 }
+export function isProductInCartQuery(): string {
+    return `SELECT * FROM shopping.cart_details WHERE cart_id = ? AND product_id = ?;`
+}
 export function getCartPriceQuery(): string {
     return `SELECT sum(total_price) as total_cart_price FROM shopping.cart_details WHERE cart_id = ?;`
 }

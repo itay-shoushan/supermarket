@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { IOrder } from '../models/order';
-import { addProductToCartService, createCartToUserService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, isCartExist, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
+import { addProductToCartService, createCartToUserService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, isCartExist, isProductInCartService, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
 
 export async function getCartDetailsByCartIDHandler(req: Request, res: Response, next: NextFunction) {
     try {
@@ -9,7 +9,7 @@ export async function getCartDetailsByCartIDHandler(req: Request, res: Response,
         const currentCart = await isCartExist(cart_id);
         if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
         const cartDetails = await getCartDetailsByIDService(cart_id);
-        if (cartDetails?.length === 0) return res.status(400).json({ message: "cart is empty" });
+        if (cartDetails?.length === 0) return res.status(204).json({ message: "cart is empty", cartDetails: [] });
         else return res.status(200).json({ message: "ok", cartDetails })
     } catch (error) {
         return next(new Error("getCartDetailsByCartIDHandler" + error?.message));
@@ -45,9 +45,18 @@ export async function addProductToCartByIDHandler(req: Request, res: Response, n
         if (!cart_id) return res.status(403).json({ message: "bad request" });
         const currentCart = await isCartExist(cart_id);
         if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
-        const result = await addProductToCartService(product_id, quantity, total_price, cart_id);
-        if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "porduct failed to add" });
-        else return res.status(200).json({ message: "product added succefully" })
+        const isProductInCart = await isProductInCartService(cart_id, product_id);
+        if (isProductInCart) {
+            const newQuantity = isProductInCart?.quantity + quantity;
+            const newTotalPrice = isProductInCart?.total_price + total_price;
+            const result = await updateQuantityService(newQuantity, newTotalPrice, product_id, cart_id);
+            if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "update quantity failed" });
+            else return res.status(200).json({ message: "product updated succefully" })
+        } else {
+            const result = await addProductToCartService(product_id, quantity, total_price, cart_id);
+            if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "porduct failed to add" });
+            else return res.status(200).json({ message: "product added succefully" })
+        }
     } catch (error) {
         return next(new Error("addProductToCartByIDHandler error" + error?.message));
     }
@@ -59,9 +68,21 @@ export async function updateProductQuantityHandler(req: Request, res: Response, 
         if (!cart_id) return res.status(403).json({ message: "bad request" });
         const currentCart = await isCartExist(cart_id);
         if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
-        const result = await updateQuantityService(quantity, total_price, product_id, cart_id);
-        if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "update quantity failed" });
-        else return res.status(200).json({ message: "product updated succefully" })
+        const isProductInCart = await isProductInCartService(cart_id, product_id);
+        if (!isProductInCart) return res.status(403).json({ message: "the product is not in the cart" });
+        else {
+            if (isProductInCart.quantity === 1) {
+                const result = await removeProductFromCartService(cart_id, product_id);
+                if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "porduct failed to add" });
+                else return res.status(200).json({ message: "product removed succefully" })
+            } else {
+                const newQuantity = isProductInCart?.quantity + quantity;
+                const newTotalPrice = isProductInCart?.total_price + total_price;
+                const result = await updateQuantityService(newQuantity, newTotalPrice, product_id, cart_id);
+                if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "update quantity failed" });
+                else return res.status(200).json({ message: "product updated succefully" })
+            }
+        }
     } catch (error) {
         return next(new Error("updateProductQuantityHandler error" + error?.message));
     }
@@ -74,6 +95,8 @@ export async function removeProductFromCartByIDHandler(req: Request, res: Respon
         if (!cart_id || !product_id) return res.status(403).json({ message: "bad request" });
         const currentCart = await isCartExist(cart_id);
         if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
+        const isProductInCart = await isProductInCartService(cart_id, product_id);
+        if (!isProductInCart) return res.status(403).json({ message: "the product is not in the cart" });
         const result = await removeProductFromCartService(cart_id, product_id);
         if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "porduct failed to add" });
         else return res.status(200).json({ message: "product removed succefully" })

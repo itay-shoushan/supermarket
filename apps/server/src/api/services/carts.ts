@@ -1,6 +1,6 @@
 import { getConnection } from "../../config/database_config";
-import { addProductToCartQuery, closeOrderQuery, createCartToUserQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery } from "../helpers/queries";
-import { ICart, ICartDetailsResponse } from "../models/cart_details";
+import { addProductToCartQuery, closeOrderQuery, createCartToUserQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, isProductInCartQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery } from "../helpers/queries";
+import { ICart, ICartDetails, ICartDetailsResponse } from "../models/cart_details";
 import { IOrder } from "../models/order";
 
 export async function getCartDetailsByIDService(cart_id: number): Promise<ICartDetailsResponse[]> {
@@ -46,6 +46,11 @@ export async function orderCartService(orderDetailsObject: IOrder): Promise<any>
 export async function isCartExist(cart_id: number): Promise<ICart> {
     const query = isCartExistQuery();
     const [result] = await getConnection().execute(query, [cart_id]);
+    return result[0];
+}
+export async function isProductInCartService(cart_id: number, product_id: number): Promise<ICartDetails> {
+    const query = isProductInCartQuery();
+    const [result] = await getConnection().execute(query, [cart_id, product_id]);
     return result[0];
 }
 export async function getCartPriceService(cart_id: number): Promise<number> {

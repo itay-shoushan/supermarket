@@ -10,7 +10,7 @@
             <div class="addedToCart">
                 <button [disabled]="product_quantity === 0" (click)="decrementQuantity(product)" mat-button>-</button>
                 <div>quantity:{{product_quantity}}</div>
-                <button (click)="incrementQuantity(product)" mat-button>+</button>
+                <button (click)="addToCart(product)" mat-button>+</button>
             </div>
         </ng-template>
     </div>
