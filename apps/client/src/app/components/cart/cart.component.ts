@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ignoreElements, Observable } from 'rxjs';
 import { ICartDetail } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -32,6 +32,14 @@ export class CartComponent implements OnInit, OnChanges {
       //   }
       // })
     }
+  }
+  isCartEmpty(): boolean {
+    let result = true;
+    this.products_in_cart$.subscribe((p: any) => {
+      if (p.length !== 0) result = false
+      else result = true
+    })
+    return result
   }
   ngOnInit(): void {
 

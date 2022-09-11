@@ -1,11 +1,12 @@
 <div>
     <h1>my cart</h1>
-    <div style="overflow-x: hiddem; overflow-y: auto; height: 500px;">
+    <div *ngIf="isCartEmpty()">
+        your cart is empty
+    </div>
+    <div style="overflow-x: hiddem; overflow-y: auto; height: 500px;" *ngIf="products_in_cart$|async">
         <div *ngFor="let product of products_in_cart$ | async">
             <app-cart-item [cart_product]="product"></app-cart-item>
             <mat-divider></mat-divider>
         </div>
     </div>
-
-
 </div>

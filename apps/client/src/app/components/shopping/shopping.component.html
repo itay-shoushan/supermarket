@@ -9,9 +9,17 @@
             <!-- <h1>{{cart|json}}</h1> -->
         </div>
         <div style="background-color: yellow;" class="col-8">
-            <app-products-paginator [cart_id]="this.currentCartID" [products]="products" [pageSize]="8"
-                [columnSize]="'col-3'">
-            </app-products-paginator>
+            <div class="container">
+                <div class="row">
+                    <app-categories></app-categories>
+                </div>
+                <div class="row">
+                    <app-products-paginator [cart_id]="this.currentCartID" [products]="products" [pageSize]="8"
+                        [columnSize]="'col-3'">
+                    </app-products-paginator>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- <div *ngIf="cartIsOpen; else elseBlock" class="row">

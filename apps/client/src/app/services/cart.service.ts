@@ -29,8 +29,12 @@ export class CartService {
   async getCartDetails(cart_id: number): Promise<ICartDetail[]> {
     const getCartUrl = `${this.serverUrl}/carts/cart_details`;
     const products_in_cart = await firstValueFrom(this.http.get(`${getCartUrl}/${cart_id}`)).then((response: any) => {
-      this.cartDetailsSubject.next(response.cartDetails);
-      return response.cartDetails
+      if (response?.cartDetails) this.cartDetailsSubject.next(response?.cartDetails);
+      else this.cartDetailsSubject.next([]);
+      return response?.cartDetails
+    }).catch((ex: any) => {
+      console.log(ex);
+
     })
     return products_in_cart
   }
