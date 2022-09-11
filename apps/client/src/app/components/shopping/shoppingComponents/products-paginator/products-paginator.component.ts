@@ -10,12 +10,13 @@ import { IProduct, IProductInCart } from 'src/app/models/product.model';
 export class ProductsPaginatorComponent implements OnInit {
   @Input() columnSize: string = '';
   @Input() pageSize: number = 12;
+  // @Input() products: any[] | null = [];
   @Input() products: IProduct[] = [];
   p: number = 1;
 
-  @Input() cart_id:number;
+  @Input() cart_id: number;
 
-  constructor() { 
+  constructor() {
 
   }
   ngOnInit(): void {

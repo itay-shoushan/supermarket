@@ -32,7 +32,6 @@ export class ProductCardComponent implements OnInit {
     }
     try {
       const response = await this.cartService.addProductToCart(current_product, this.cart_id);
-      alert(response?.message)
     } catch (ex: any) {
       ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
     }
@@ -45,7 +44,6 @@ export class ProductCardComponent implements OnInit {
     }
     try {
       const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
-      alert(response?.message)
     } catch (ex: any) {
       ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
     }
@@ -57,7 +55,6 @@ export class ProductCardComponent implements OnInit {
       this.product_quantity--;
       try {
         const response = await this.cartService.removeProduct(product, this.cart_id);
-        alert(response?.message);
       } catch (ex: any) {
         ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
       }
@@ -69,7 +66,6 @@ export class ProductCardComponent implements OnInit {
       }
       try {
         const response = await this.cartService.updateProductQuantity(current_product, this.cart_id);
-        alert(response?.message)
       } catch (ex: any) {
         ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
       }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { IOrder } from '../models/order';
-import { addProductToCartService, createCartToUserService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, isCartExist, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
+import { addProductToCartService, createCartToUserService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, isCartExist, isProductInCartService, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
 
 export async function getCartDetailsByCartIDHandler(req: Request, res: Response, next: NextFunction) {
     try {
@@ -45,6 +45,7 @@ export async function addProductToCartByIDHandler(req: Request, res: Response, n
         if (!cart_id) return res.status(403).json({ message: "bad request" });
         const currentCart = await isCartExist(cart_id);
         if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
+        // const isProductInCart = await isProductInCartService(cart_id,product_id);
         const result = await addProductToCartService(product_id, quantity, total_price, cart_id);
         if (!result || result?.affectedRows === 0) return res.status(400).json({ message: "porduct failed to add" });
         else return res.status(200).json({ message: "product added succefully" })
