@@ -74,7 +74,15 @@ export function orderCartQuery(): string {
     return `INSERT INTO shopping.orders (user_id, cart_id, total_price, city, street, date, credit_card) VALUES (?, ?, ?, ?, ?, ?, ?);
     `
 }
-export function closeOrderQuery(): string {
+export function getCloseOrderQuery(): string {
     return `UPDATE shopping.carts SET status = '0' WHERE (id = ?);
     `
+}
+export function getUnavailableShippingDatesQuery(): string {
+    return `SELECT 
+    date, COUNT(*) AS shipping_date_count
+FROM
+    shopping.orders
+GROUP BY date
+HAVING shipping_date_count > 2 AND date > NOW();`
 }

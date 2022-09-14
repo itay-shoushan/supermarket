@@ -1,5 +1,5 @@
 import { getConnection } from "../../config/database_config";
-import { addProductToCartQuery, closeOrderQuery, createCartToUserQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, isProductInCartQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery } from "../helpers/queries";
+import { addProductToCartQuery, getCloseOrderQuery, createCartToUserQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, isProductInCartQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery, getUnavailableShippingDatesQuery } from "../helpers/queries";
 import { ICart, ICartDetails, ICartDetailsResponse } from "../models/cart_details";
 import { IOrder } from "../models/order";
 
@@ -37,8 +37,8 @@ export async function orderCartService(orderDetailsObject: IOrder): Promise<any>
     const query = orderCartQuery();
     const [result] = await getConnection().execute(query, Object.values(orderDetailsObject));
     if (result?.affectedRows === 1) {
-        const closeOrderQ = closeOrderQuery();
-        const [closeOrderResult] = await getConnection().execute(closeOrderQ, [orderDetailsObject?.cart_id]);
+        const closeOrderQuery = getCloseOrderQuery();
+        const [closeOrderResult] = await getConnection().execute(closeOrderQuery, [orderDetailsObject?.cart_id]);
         if (closeOrderResult?.affectedRows === 1) return result
         else return false
     } else return false
@@ -56,7 +56,11 @@ export async function isProductInCartService(cart_id: number, product_id: number
 export async function getCartPriceService(cart_id: number): Promise<number> {
     const query = getCartPriceQuery();
     const [result] = await getConnection().execute(query, [cart_id]);
-    console.log(result[0]);
     if (result[0]?.total_cart_price) return parseInt(result[0]?.total_cart_price);
     else return 0
+}
+export async function getUnavailableShippingDatesService(): Promise<any> {
+    const query = getUnavailableShippingDatesQuery();
+    const [result] = await getConnection().query(query);
+    return result;
 }

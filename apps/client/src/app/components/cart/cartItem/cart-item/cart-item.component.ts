@@ -9,6 +9,8 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartItemComponent implements OnInit {
   @Input() cart_product: ICartDetail;
+  @Input() inCheckout: boolean = false;
+
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {

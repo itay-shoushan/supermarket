@@ -1,12 +1,27 @@
-<div>
-    <h1>my cart</h1>
+<div *ngIf="products_in_cart$|async">
+    <h1>my cart
+        <button *ngIf="inCheckout" (click)="backToShopping(this.cart_id)" mat-button>
+            back to shop
+        </button>
+    </h1>
+    <p style="border: 1px solid black;">total:
+        {{total_cart_price$|async|currency}}</p>
     <div *ngIf="isCartEmpty()">
         your cart is empty
     </div>
-    <div style="overflow-x: hiddem; overflow-y: auto; height: 500px;" *ngIf="products_in_cart$|async">
-        <div *ngFor="let product of products_in_cart$ | async">
-            <app-cart-item [cart_product]="product"></app-cart-item>
-            <mat-divider></mat-divider>
+    <div *ngIf="products_in_cart$|async">
+        <div style="overflow-x: hiddem; overflow-y: auto; height: 500px;">
+            <div *ngFor="let product of products_in_cart$ | async">
+                <app-cart-item [inCheckout]="this.inCheckout" [cart_product]="product"></app-cart-item>
+                <mat-divider></mat-divider>
+            </div>
         </div>
+
+        <div *ngIf="!inCheckout">
+            <button (click)="moveToCheckout()" mat-button> move to checkout </button>
+        </div>
+
     </div>
+
+
 </div>

@@ -31,17 +31,7 @@ export class ShoppingComponent implements OnInit, OnChanges {
     this.currentBuyerID = user?.id;
     this.productsService.loadProducts();
     this.products$ = this.productsService.products$;
-    // console.log(this.products$);
 
-    // this.init();
-    // this.productsService.getProducts().subscribe({
-    //   error: (ex: any) => {
-    //     alert(ex?.error?.message);
-    //   },
-    //   next: (result: any) => {
-    //     this.products = result?.products;
-    //   }
-    // })
     if (this.currentBuyerID) {
       this.cartService.getCart(this.currentBuyerID).subscribe({
         error: (ex: any) => {
@@ -49,37 +39,6 @@ export class ShoppingComponent implements OnInit, OnChanges {
         },
         next: (result: any) => {
           this.currentCartID = result?.cart?.id;
-          // this.cartService.getCartDetails(this.currentCartID).then((r: any) => {
-
-
-          // })
-          // this.currentCartDetails$ = this.cartService.products_in_cart$
-
-          // this.cartService.getCartDetails(result?.cart?.id).then((response: any) => {
-          //   console.log("responseresponseresponseresponseresponseresponseresponse");
-          //   console.log(response?.cartDetails);
-          //   console.log("responseresponseresponseresponseresponseresponseresponse");
-          //   // this.currentCartDetails = response?.cartDetails as ICartDetail[]
-          // }).catch((ex: any) => {
-          //   console.log(ex);
-          //   alert("error")
-          // })
-
-          // try {
-
-          //   this.cartService.getCartDetails(result?.cart?.id)
-          // } catch (error) {
-
-          // }
-          // this.cartService.getCartDetails(result?.cart?.id).subscribe({
-          //   error: (ex: any) => {
-          //     console.log(ex);
-          //     // alert(ex?.error?.message);
-          //   },
-          //   next: (response: any) => {
-          //     this.currentCartDetails = response?.cartDetails
-          //   }
-          // })
         }
       })
     }

@@ -32,6 +32,8 @@ import { CartItemComponent } from './components/cart/cartItem/cart-item/cart-ite
 import { MatDividerModule } from '@angular/material/divider';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { CategoriesComponent } from './components/categories/categories.componen
     NgxPaginationModule,
     HttpClientModule,
     MatDividerModule,
-    ScrollingModule
+    ScrollingModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

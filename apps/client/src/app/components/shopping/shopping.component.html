@@ -5,7 +5,7 @@
     </div> -->
     <div class="row" style="height: 100%;">
         <div style="background-color: aqua;" class="col-4" *ngIf="currentCartID">
-            <app-cart [cart_id]="currentCartID"></app-cart>
+            <app-cart [inCheckout]="false" [cart_id]="currentCartID"></app-cart>
         </div>
         <div style="background-color: yellow;" class="col-8">
             <div class="container">

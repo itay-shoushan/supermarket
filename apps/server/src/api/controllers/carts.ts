@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { IOrder } from '../models/order';
-import { addProductToCartService, createCartToUserService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, isCartExist, isProductInCartService, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
+import { addProductToCartService, createCartToUserService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, getUnavailableShippingDatesService, isCartExist, isProductInCartService, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
 
 export async function getCartDetailsByCartIDHandler(req: Request, res: Response, next: NextFunction) {
     try {
@@ -15,6 +15,15 @@ export async function getCartDetailsByCartIDHandler(req: Request, res: Response,
         return next(new Error("getCartDetailsByCartIDHandler" + error?.message));
     }
 }
+export async function getUnavailableShippingDatesHandler(req: Request, res: Response, next: NextFunction) {
+    try {
+        const unavailableShippingDates = await getUnavailableShippingDatesService();
+        if (!unavailableShippingDates) return res.status(404).json({ message: "somthing went wrong please try again" });
+        else return res.status(200).json({ message: "ok", unavailable_shipping_dates: unavailableShippingDates });
+    } catch (error) {
+        return next(new Error("getUnavailableShippingDatesHandler" + error?.message));
+    }
+}
 export async function getCartByUserIDHandler(req: Request, res: Response, next: NextFunction) {
     try {
         const user_id = req?.params?.user_id;
@@ -22,7 +31,6 @@ export async function getCartByUserIDHandler(req: Request, res: Response, next: 
         const cart = await getCartByUserIDService(user_id);
         if (!cart) {
             const newCart = await createCartToUserService(user_id);
-            console.log(newCart);
             if (newCart?.insertId) {
                 const currentCart = await getCartByUserIDService(user_id);
                 if (!currentCart) return res.status(404).json({ message: "getting cart details went wrong" });
@@ -104,6 +112,17 @@ export async function removeProductFromCartByIDHandler(req: Request, res: Respon
         return next(new Error("removeProductFromCartByIDHandler error: " + error?.message));
     }
 }
+export async function getCartTotalPriceHandler(req: Request, res: Response, next: NextFunction) {
+    try {
+        const cart_id = req?.params?.cart_id;
+        const currentCart = await isCartExist(cart_id);
+        if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
+        const cart_total = await getCartPriceService(currentCart?.id);
+        return res.status(200).json({ message: "ok", total_price: cart_total });
+    } catch (error) {
+        return next(new Error("getCartTotalPriceHandler error: " + error?.message));
+    }
+}
 export async function orderCartByIDHandler(req: Request, res: Response, next: NextFunction) {
     try {
         const cart_id = req?.params?.cart_id;
@@ -113,8 +132,17 @@ export async function orderCartByIDHandler(req: Request, res: Response, next: Ne
         const currentUser = req.userData;
         if (!currentUser) return res.status(401).json({ message: "unauthorized" });
         const { city, street, date, credit_card } = req.body;
+        const fullShippingDates = await getUnavailableShippingDatesService();
+        let isDateAvailable = true;
+        fullShippingDates.map((result: any) => {
+            const tempDate = new Date((result?.date).toString());
+            const currentStringDate = `${tempDate.getFullYear()}-${("0" + (tempDate.getMonth() + 1)).slice(-2)}-${("0" + tempDate.getDate()).slice(-2)}`
+            if (currentStringDate === date) isDateAvailable = false;
+            else isDateAvailable = true
+        })
+        if (!isDateAvailable) return res.status(404).json({ message: "date is already full of shipping please select another date" });
         const cart_total = await getCartPriceService(currentCart?.id);
-        if (!cart_total) return res.status(404).json({ message: "wrong car total error please try again" });
+        if (!cart_total) return res.status(404).json({ message: "error, please try again" });
         const orderDetailsObject: IOrder = {
             user_id: currentUser?.id,
             cart_id: currentCart?.id,

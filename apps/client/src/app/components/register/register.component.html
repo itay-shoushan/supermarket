@@ -39,7 +39,7 @@
                     <mat-label>Select City</mat-label>
                     <mat-select #user_city="ngModel" name="user_city" ngModel required>
                         <mat-option disabled="true" value="''">Select City</mat-option>
-                        <mat-option *ngFor="let city of cities" [value]="city.value">{{city.viewValue}}</mat-option>
+                        <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
                     </mat-select>
                     <mat-error class="matErrorAccount" *ngIf="user_city.value ===''">City must be picked</mat-error>
                 </mat-form-field>

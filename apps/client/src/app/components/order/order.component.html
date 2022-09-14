@@ -1,17 +1,64 @@
 <div class="container">
     <div class="row">
-        <div class="col-6">
+        <div style="background-color: lightblue;" class="col-6">
             <div class="container">
                 <div class="row">
                     <input type="text">
                 </div>
-                <div class="row">
-                    CART
+                <div *ngIf="currentCartID" class="row">
+                    <app-cart [inCheckout]="true" [cart_id]="currentCartID"></app-cart>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            ORDER
+        <div style="background-color: lightblue;" class="col-6">
+            <form #checkoutForm="ngForm" (submit)="checkout(checkoutForm)">
+                <div class="example-form">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Select City</mat-label>
+                        <mat-select #user_city="ngModel" name="user_city" ngModel required>
+                            <mat-option disabled="true" value="''">Select City</mat-option>
+                            <mat-option *ngFor="let city of cities" [value]="city">{{city}}
+                            </mat-option>
+                        </mat-select>
+                        <!-- <mat-error class="matErrorAccount" *ngIf="user_city.value ===''">City must be picked
+                        </mat-error> -->
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Street</mat-label>
+                        <input #user_street="ngModel" minlength="2" maxlength="18" required type="text"
+                            name="user_street" matInput placeholder="Street" ngModel>
+                        <!-- <mat-error class="matErrorAccount" *ngIf="user_street.invalid">Street must be filled
+                        </mat-error> -->
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Shipping Date</mat-label>
+                        <input max="{{maxDate | date:'yyyy-MM-dd'}}" min="{{currentDate | date:'yyyy-MM-dd'}}"
+                            #shipping_date="ngModel" required type="date" name="shipping_date" matInput
+                            placeholder="Shipping Date" ngModel>
+                        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                        <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+                        <!-- <mat-datepicker #picker></mat-datepicker> -->
+                        <!-- <input #shipping_date="ngModel" required type="date" name="shipping_date" matInput
+                            placeholder="Shipping Date" ngModel> -->
+
+                        <!-- <mat-error class="matErrorAccount" *ngIf="shipping_date.invalid">Name must be filled
+                        </mat-error> -->
+                    </mat-form-field>
+                    <mat-divider></mat-divider>
+                    <h3>Payment</h3>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Credit Card</mat-label>
+                        <input #user_credit_card="ngModel" min="1111" max="9999" minlength="4" maxlength="4" required
+                            type="number" name="user_credit_card" matInput placeholder="Credit Card" ngModel>
+                        <mat-error class="matErrorAccount" *ngIf="user_credit_card.invalid">Please enter 4 last digits
+                            only
+                        </mat-error>
+                    </mat-form-field>
+                    <div>
+                        <button type="submit" mat-raised-button color="primary">submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -1,25 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUserRegister } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
-interface City {
-  value: string;
-  viewValue: string;
-}
+import { CitiesService } from 'src/app/services/cities.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  public cities: City[] = [];
-  constructor(private authService: AuthService, private route: Router) {
-    this.cities = [
-      { value: 'telaviv-0', viewValue: 'Tel Aviv' },
-      { value: 'haifa-1', viewValue: 'Haifa' },
-      { value: 'rehovot-2', viewValue: 'Rehovot' },
-    ]
+  public cities: string[] = [];
+  constructor(private authService: AuthService, private route: Router, private citiesService: CitiesService) {
+    // this.cities = [
+    //   { value: 'telaviv-0', viewValue: 'Tel Aviv' },
+    //   { value: 'haifa-1', viewValue: 'Haifa' },
+    //   { value: 'rehovot-2', viewValue: 'Rehovot' },
+    // ]
+    this.cities = this.citiesService.cities;
   }
   ngOnInit(): void {
   }
