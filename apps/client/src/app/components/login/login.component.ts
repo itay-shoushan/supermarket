@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { IUserLogin } from 'src/app/models/user.model';
@@ -16,13 +16,18 @@ export class LoginComponent implements OnInit {
 
   private _userDeails$ = new BehaviorSubject<boolean>(false);
   userDeails$ = this._userDeails$.asObservable();
+  public current_role: string = '';
+  @Output() isLoggedInEvent = new EventEmitter<boolean>(false);
 
   constructor(private authService: AuthService, private route: Router) {
     const currentToken = localStorage.getItem("token");
     this._isLoggedIn$.next(!!currentToken);
+    this.isLoggedInEvent.emit(!!currentToken);
+
   }
 
   ngOnInit(): void {
+    this.current_role = this.authService.getUserData().role;
   }
   onLogin(form: NgForm) {
     const currentUser: IUserLogin = {
@@ -35,11 +40,14 @@ export class LoginComponent implements OnInit {
       },
       next: (result: any) => {
         localStorage.setItem("token", result?.token);
-        this._isLoggedIn$.next(true)
+        this._isLoggedIn$.next(true);
+        this.isLoggedInEvent.emit(true);
+        this.current_role = this.authService.getUserData().role;
       },
       complete: () => {
         alert("login succeed");
-        this.route.navigate(["shopping"]);
+        this.route.navigate(["home"]);
+        window.location.reload();
       }
     })
   }

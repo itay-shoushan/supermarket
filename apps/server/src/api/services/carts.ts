@@ -1,5 +1,5 @@
 import { getConnection } from "../../config/database_config";
-import { addProductToCartQuery, getCloseOrderQuery, createCartToUserQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, isProductInCartQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery, getUnavailableShippingDatesQuery } from "../helpers/queries";
+import { addProductToCartQuery, getCloseOrderQuery, createCartToUserQuery, getCartByUserIDQuery, getCartDetailsByCartIDQuery, getCartPriceQuery, isCartExistQuery, isProductInCartQuery, orderCartQuery, removeProductToCartQuery, updateProductQuantityQuery, getUnavailableShippingDatesQuery, getAllOrdersQuery, deleteAllProductsFromCartQuery } from "../helpers/queries";
 import { ICart, ICartDetails, ICartDetailsResponse } from "../models/cart_details";
 import { IOrder } from "../models/order";
 
@@ -33,6 +33,11 @@ export async function removeProductFromCartService(cart_id: number, product_id: 
     const [result] = await getConnection().execute(query, [cart_id, product_id]);
     return result;
 }
+export async function deleteAllProductsFromCartService(cart_id: number): Promise<any> {
+    const query = deleteAllProductsFromCartQuery();
+    const [result] = await getConnection().execute(query, [cart_id]);
+    return result;
+}
 export async function orderCartService(orderDetailsObject: IOrder): Promise<any> {
     const query = orderCartQuery();
     const [result] = await getConnection().execute(query, Object.values(orderDetailsObject));
@@ -64,3 +69,13 @@ export async function getUnavailableShippingDatesService(): Promise<any> {
     const [result] = await getConnection().query(query);
     return result;
 }
+export async function getAllOrdersService(): Promise<any> {
+    const query = getAllOrdersQuery();
+    const [result] = await getConnection().query(query);
+    return result;
+}
+// export async function getAllUserCartsService(user_id: number): Promise<any> {
+//     const query = getAllUserCartQuery();
+//     const [result] = await getConnection().execute(query,[user_id]);
+//     return result[0];
+// }

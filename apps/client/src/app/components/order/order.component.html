@@ -16,6 +16,7 @@
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Select City</mat-label>
                         <mat-select #user_city="ngModel" name="user_city" ngModel required>
+                            <mat-option value="this.currentBuyer.city">{{this.currentBuyer.city}}</mat-option>
                             <mat-option disabled="true" value="''">Select City</mat-option>
                             <mat-option *ngFor="let city of cities" [value]="city">{{city}}
                             </mat-option>
@@ -25,8 +26,10 @@
                     </mat-form-field>
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Street</mat-label>
-                        <input #user_street="ngModel" minlength="2" maxlength="18" required type="text"
-                            name="user_street" matInput placeholder="Street" ngModel>
+                        <input
+                            [(ngModel)]="this.currentBuyer ? this.currentBuyer.street : this.checkoutForm.value.user_street"
+                            #user_street="ngModel" minlength="2" maxlength="18" required type="text" name="user_street"
+                            matInput placeholder="Street" ngModel>
                         <!-- <mat-error class="matErrorAccount" *ngIf="user_street.invalid">Street must be filled
                         </mat-error> -->
                     </mat-form-field>
@@ -35,14 +38,6 @@
                         <input max="{{maxDate | date:'yyyy-MM-dd'}}" min="{{currentDate | date:'yyyy-MM-dd'}}"
                             #shipping_date="ngModel" required type="date" name="shipping_date" matInput
                             placeholder="Shipping Date" ngModel>
-                        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
-                        <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
-                        <!-- <mat-datepicker #picker></mat-datepicker> -->
-                        <!-- <input #shipping_date="ngModel" required type="date" name="shipping_date" matInput
-                            placeholder="Shipping Date" ngModel> -->
-
-                        <!-- <mat-error class="matErrorAccount" *ngIf="shipping_date.invalid">Name must be filled
-                        </mat-error> -->
                     </mat-form-field>
                     <mat-divider></mat-divider>
                     <h3>Payment</h3>

@@ -8,10 +8,16 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   // public current_user:string = '';
-  @Input() current_user: string = '';
-  constructor(private authService: AuthService) { 
+  public current_user: string = '';
+  public current_role: string = '';
+  constructor(private authService: AuthService) {
     const userData = this.authService.getUserData();
-    if (userData) this.current_user = userData?.first_name
+    if (userData) {
+      this.current_user = userData?.first_name;
+      if (userData?.role === 'admin') this.current_role = 'admin'
+      else if (userData?.role === 'viewer') this.current_role = 'viewer'
+      else this.current_role = '';
+    }
   }
 
   ngOnInit(): void {

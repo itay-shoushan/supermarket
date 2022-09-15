@@ -20,6 +20,21 @@ export function getProductCategoriesQuery(): string {
 export function getProductsByCategoryQuery(): string {
     return `SELECT * FROM shopping.products WHERE category_id = ?;`
 }
+export function addProductQuery(): string {
+    return `INSERT INTO shopping.products (name, category_id, price, picture) VALUES (?, ?, ?, ?);
+    `
+}
+export function editProductQuery(): string {
+    return `UPDATE shopping.products 
+    SET 
+        name = ?,
+        category_id = ?,
+        price = ?,
+        picture = ?
+    WHERE
+        (id = ?);
+    `
+}
 export function getCartByUserIDQuery(): string {
     return `SELECT 
     *
@@ -61,9 +76,15 @@ export function updateProductQuantityQuery(): string {
 export function removeProductToCartQuery(): string {
     return `DELETE FROM shopping.cart_details WHERE (cart_id = ?) AND (product_id = ?) ;`
 }
+export function deleteAllProductsFromCartQuery(): string {
+    return `DELETE FROM shopping.cart_details WHERE (cart_id = ?);`
+}
 export function isCartExistQuery(): string {
     return `SELECT * FROM shopping.carts WHERE id = ? AND status = 1;`
 }
+// export function getAllUserCartQuery(): string {
+//     return `SELECT * FROM shopping.carts WHERE user_id = ? ORDER BY created_at DESC;`
+// }
 export function isProductInCartQuery(): string {
     return `SELECT * FROM shopping.cart_details WHERE cart_id = ? AND product_id = ?;`
 }
@@ -85,4 +106,7 @@ FROM
     shopping.orders
 GROUP BY date
 HAVING shipping_date_count > 2 AND date > NOW();`
+}
+export function getAllOrdersQuery(): string {
+    return `SELECT * FROM shopping.orders;`
 }

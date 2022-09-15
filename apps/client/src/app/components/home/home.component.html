@@ -1,7 +1,7 @@
 <ng-container>
     <mat-grid-list cols="3" gutterSize="20" rowHeight="92%">
         <mat-grid-tile>
-            <app-login></app-login>
+            <app-login (isLoggedInEvent)="isLogged($event)"></app-login>
         </mat-grid-tile>
         <mat-grid-tile>
             <div id="details">
@@ -13,10 +13,15 @@
         </mat-grid-tile>
         <mat-grid-tile>
             <div>
-                <div>
-                    <h3>num of products: {{this.numberOfProducts}} </h3>
-                    <h3>num of orders: {{this.numberOfOrders}} </h3>
+                <div *ngIf="this.numberOfProducts && this.numberOfOrders; else elseBlock">
+                    <h3>number of products available: {{this.numberOfProducts}} </h3>
+                    <h3>number of orders: {{this.numberOfOrders}} </h3>
                 </div>
+                <ng-template #elseBlock>
+                    <div>
+                        <h3>log in to see more details about our store !!</h3>
+                    </div>
+                </ng-template>
                 <div>
                     <img class="secondaryImg" src="/assets/shopping_main.jpg" alt="404">
                 </div>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ICartDetail, ICheckoutCart, IUnavailableDate } from '../models/cart.model';
+import { ICartDetail, ICheckoutCart, IOrder, IUnavailableDate } from '../models/cart.model';
 import { IProduct, IProductInCart } from '../models/product.model';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class CartService {
   private cartDetailsSubject = new BehaviorSubject<ICartDetail[]>([]);
   private cartTotalPriceSubject = new BehaviorSubject<number>(0);
   private unavailableDatesSubject = new BehaviorSubject<IUnavailableDate[]>([]);
+  private allOrdersSubject = new BehaviorSubject<IOrder[]>([]);
 
   private _cartID$ = new BehaviorSubject<number>(-1);
   cartID$ = this._cartID$.asObservable();
@@ -27,9 +28,22 @@ export class CartService {
   get total_cart_price$(): Observable<number> {
     return this.cartTotalPriceSubject.asObservable();
   }
+  get allOrders$(): Observable<IOrder[]> {
+    return this.allOrdersSubject.asObservable();
+  }
   getCart(user_id: number) {
     const getCartUrl = `${this.serverUrl}/carts/user_cart`;
     return this.http.get(`${getCartUrl}/${user_id}`);
+  }
+  async loadOrders() {
+    const loadOrdersUrl = `${this.serverUrl}/carts/all_orders`
+    const result = await firstValueFrom(this.http.get(loadOrdersUrl)).then((res: any) => {
+      if (res?.orders) {
+        this.allOrdersSubject.next(res?.orders);
+        return res?.orders;
+      } else this.allOrdersSubject.next([]);
+    })
+    return result
   }
   async getCartDetails(cart_id: number): Promise<ICartDetail[]> {
     if (!cart_id) return []
@@ -98,6 +112,7 @@ export class CartService {
       credit_card: checkoutObject.credit_card,
     }))
     await this.getUnavailableDates();
+    await this.loadOrders();
     return promise
   }
   async getUnavailableDates() {
@@ -112,5 +127,12 @@ export class CartService {
       console.log(ex);
     })
     return unavailableDates
+  }
+  async clearCart(cart_id: number) {
+    const deleteAllCartURL = `${this.serverUrl}/carts/delete_cart`;
+    const promise = await firstValueFrom(this.http.delete(`${deleteAllCartURL}/${cart_id}`))
+    await this.getCartDetails(cart_id);
+    await this.getCartPrice(cart_id);
+    return promise
   }
 }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { IOrder } from '../models/order';
-import { addProductToCartService, createCartToUserService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, getUnavailableShippingDatesService, isCartExist, isProductInCartService, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
+import { addProductToCartService, createCartToUserService, deleteAllProductsFromCartService, getAllOrdersService, getCartByUserIDService, getCartDetailsByIDService, getCartPriceService, getUnavailableShippingDatesService, isCartExist, isProductInCartService, orderCartService, removeProductFromCartService, updateQuantityService } from '../services/carts';
 
 export async function getCartDetailsByCartIDHandler(req: Request, res: Response, next: NextFunction) {
     try {
@@ -44,6 +44,15 @@ export async function getCartByUserIDHandler(req: Request, res: Response, next: 
     } catch (error) {
         return next(new Error("getCartByUserIDHandler error" + error?.message));
 
+    }
+}
+export async function getAllOrdersHandler(req: Request, res: Response, next: NextFunction) {
+    try {
+        const allOrders = await getAllOrdersService();
+        if (!allOrders) return res.status(404).json({ message: "no orders available" });
+        else return res.status(200).json({ message: "ok", orders: allOrders });
+    } catch (error) {
+        return next(new Error("getAllOrdersHandler error" + error?.message));
     }
 }
 export async function addProductToCartByIDHandler(req: Request, res: Response, next: NextFunction) {
@@ -110,6 +119,19 @@ export async function removeProductFromCartByIDHandler(req: Request, res: Respon
         else return res.status(200).json({ message: "product removed succefully" })
     } catch (error) {
         return next(new Error("removeProductFromCartByIDHandler error: " + error?.message));
+    }
+}
+export async function deleteAllCartHandler(req: Request, res: Response, next: NextFunction) {
+    try {
+        const cart_id = req?.params?.cart_id;
+        if (!cart_id) return res.status(403).json({ message: "bad request" });
+        const currentCart = await isCartExist(cart_id);
+        if (!currentCart) return res.status(403).json({ message: "no open cart available for the certain id" });
+        const result = await deleteAllProductsFromCartService(cart_id);
+        if(!result) return res.status(400).json({ message: "porducts failed to removed from cart" });
+        else return res.status(200).json({ message: "porducts removed from cart succefully " });
+    } catch (error) {
+        return next(new Error("deleteAllCartHandler error: " + error?.message));
     }
 }
 export async function getCartTotalPriceHandler(req: Request, res: Response, next: NextFunction) {

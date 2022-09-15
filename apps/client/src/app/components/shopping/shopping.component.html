@@ -26,20 +26,9 @@
                             </mat-form-field>
                         </form>
                     </div>
-                    <!-- <div class="col-2">
-                        clear categories
-                    </div> -->
-                    <!-- <mat-form-field class="example-form-field" appearance="fill">
-                        <mat-label>Search prouduct</mat-label>
-                        <input matInput type="text" #searchInp [(ngModel)]="searchProductInput">
-                        <button *ngIf="searchProductInput" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="searchProductInput=''">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field> -->
                 </div>
                 <div class="row" *ngIf="!((products$|async|json)==='[]'); else elseBlock">
-                    <app-products-paginator [cart_id]="this.currentCartID" [products]="(products$|async) || []"
+                    <app-products-paginator [is_admin_mode]="this.is_admin_mode" [cart_id]="this.currentCartID" [products]="(products$|async) || []"
                         [pageSize]="8" [columnSize]="'col-3'">
                     </app-products-paginator>
                 </div>

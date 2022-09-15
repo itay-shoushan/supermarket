@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import authRouter from "./api/routes/auth"
 import productsRouter from "./api/routes/products"
 import cartsRouter from "./api/routes/carts"
-import verifyTokenMiddleware from "./api/middlewares/verifyToken";
+import { verifyTokenMiddleware } from "./api/middlewares/verifyToken";
 
 
 

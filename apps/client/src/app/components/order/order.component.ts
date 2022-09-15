@@ -13,9 +13,8 @@ import { CitiesService } from 'src/app/services/cities.service';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-
   public currentCartID: number;
-  private currentBuyer: IUser;
+  public currentBuyer: IUser;
   public cities: string[] = [];
   public currentDate: Date = new Date;
   public maxDate: Date = new Date(new Date().setMonth(new Date().getMonth() + 1));

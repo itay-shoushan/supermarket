@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
         alert(ex?.error?.message)
       },
       complete: () => {
-        alert("register succeed");
+        alert("register succeed please login");
         this.route.navigate(["home"]);
       }
     })

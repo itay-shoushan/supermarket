@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IProduct } from '../models/product.model';
+import { IAddProduct, IProduct } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class ProductsService {
   get products$(): Observable<IProduct[]> {
     return this.productsSubject.asObservable();
   }
+
   async loadProducts() {
     const productsUrl = `${this.serverUrl}/products`
     const result = await firstValueFrom(this.http.get(productsUrl)).then((res: any) => {
@@ -29,6 +30,7 @@ export class ProductsService {
     })
     return result
   }
+
   async filterProductsByCategory(category_id: number) {
     const searchProductByCategoryUrl = `${this.serverUrl}/products/search_all`
     const result = await firstValueFrom(this.http.get(`${searchProductByCategoryUrl}/${category_id}`))
@@ -57,6 +59,28 @@ export class ProductsService {
           this.loadProducts();
         }
       })
+    return result
+  }
+  async editProduct(product: IProduct) {
+    const editProductUrl = `${this.serverUrl}/products/edit_product`
+    const result = await firstValueFrom(this.http.put(`${editProductUrl}/${product?.id}`, {
+      name: product?.name,
+      category_id: product?.category_id,
+      price: product?.price,
+      picture: product?.picture
+    }))
+    await this.loadProducts();
+    return result
+  }
+  async addProduct(product: IAddProduct) {
+    const addProductUrl = `${this.serverUrl}/products/add_product`
+    const result = await firstValueFrom(this.http.post(addProductUrl, {
+      name: product?.name,
+      category_id: product?.category_id,
+      price: product?.price,
+      picture: product?.picture
+    }))
+    await this.loadProducts();
     return result
   }
 }

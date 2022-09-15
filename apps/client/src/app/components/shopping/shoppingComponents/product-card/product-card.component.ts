@@ -12,6 +12,10 @@ import { CartService } from 'src/app/services/cart.service';
 export class ProductCardComponent implements OnInit {
   @Input() product: IProduct
   @Input() cart_id: number;
+  @Input() is_admin_mode: boolean;
+
+  @Output() editProductEvent = new EventEmitter<IProduct>();
+
   public product_quantity: number = 0;
   public isInCart: boolean = false;
 
@@ -35,6 +39,21 @@ export class ProductCardComponent implements OnInit {
     } catch (ex: any) {
       ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
     }
+  }
+  async editProduct(product: IProduct) {
+    this.editProductEvent.emit(product)
+
+    // this.product_quantity++;
+    // this.isInCart = true;
+    // const current_product: IProductInCart = {
+    //   product: product,
+    //   quantity: 1
+    // }
+    // try {
+    //   const response = await this.cartService.addProductToCart(current_product, this.cart_id);
+    // } catch (ex: any) {
+    //   ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
+    // }
   }
   async decrementQuantity(product: IProduct) {
     if (this.product_quantity === 0) return alert("error please try again");

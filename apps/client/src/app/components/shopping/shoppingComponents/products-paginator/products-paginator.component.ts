@@ -13,13 +13,17 @@ export class ProductsPaginatorComponent implements OnInit {
   // @Input() products: any[] | null = [];
   @Input() products: IProduct[] = [];
   p: number = 1;
-
+  @Output() editProductEvent = new EventEmitter<IProduct>();
   @Input() cart_id: number;
+  @Input() is_admin_mode: boolean;
 
   constructor() {
 
   }
   ngOnInit(): void {
+  }
+  editProduct(product: IProduct) {
+    this.editProductEvent.emit(product)
   }
 
 }

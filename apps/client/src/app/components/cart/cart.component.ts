@@ -42,6 +42,14 @@ export class CartComponent implements OnInit, OnChanges {
   backToShopping(cart_id: number) {
     this.router.navigate(["/shopping"])
   }
+  async clearCart(cart_id: number) {
+    try {
+      await this.cartService.clearCart(cart_id);
+    } catch (error) {
+      console.log(error);
+      alert("error")
+    }
+  }
   ngOnInit(): void {
 
 

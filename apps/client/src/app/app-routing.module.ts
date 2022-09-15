@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'shopping', component: ShoppingComponent, canActivate: [AuthGuard] },
   { path: 'order', component: OrderComponent, canActivate: [AuthGuard] },
-  { path: 'management', component: ManagementComponent,canActivate: [RoleGuard] },
+  { path: 'management', component: ManagementComponent, canActivate: [RoleGuard] },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
 ];
 

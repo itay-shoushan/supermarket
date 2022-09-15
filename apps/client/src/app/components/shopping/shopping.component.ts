@@ -1,6 +1,7 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ICartDetail } from 'src/app/models/cart.model';
@@ -20,13 +21,15 @@ export class ShoppingComponent implements OnInit, OnChanges {
   private currentBuyerID: number;
   public currentCartID: number;
   public selectedCategory: number;
+  public is_admin_mode: boolean = false;
   products$: Observable<IProduct[]>;
   searchProductFormControl = new FormControl('');
+  // @Output() currentCartIDEvent = new EventEmitter<number>();
   // searchProductInput: FormControl<string>;
   // searchProductInput: string = '';
   // public currentCartDetails$: Observable<ICartDetail[]>;
 
-  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService) {
+  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router) {
     const user = this.authService.getUserData();
     this.currentBuyerID = user?.id;
     this.productsService.loadProducts();
@@ -39,6 +42,7 @@ export class ShoppingComponent implements OnInit, OnChanges {
         },
         next: (result: any) => {
           this.currentCartID = result?.cart?.id;
+          // this.currentCartIDEvent.emit(result?.cart?.id)
         }
       })
     }
@@ -54,7 +58,7 @@ export class ShoppingComponent implements OnInit, OnChanges {
   // }
   ngOnInit(): void {
     // console.log(this.selectedCategory);
-    
+
     this.searchProductFormControl.valueChanges.pipe(debounceTime(500)).subscribe((v) => {
       if (v) {
         this.productsService.filterProductsByValue(v);
@@ -76,7 +80,7 @@ export class ShoppingComponent implements OnInit, OnChanges {
     // this.products$ = this.productsService.products$;
     // this.cartService.getCartDetails(this.currentCartID);
   }
-  clearInput(){
+  clearInput() {
 
   }
   ngOnChanges(changes: SimpleChanges): void {

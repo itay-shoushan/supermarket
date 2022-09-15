@@ -3,15 +3,21 @@
     <div class="card-body">
         <h5 class="card-title">{{product.name}}</h5>
         <p class="card-text">{{product.price | currency}}</p>
-        <div class="addedToCart" *ngIf="!isInCart else elseBlock">
-            <button (click)="addToCart(product)" mat-button>add to cart</button>
-        </div>
-        <ng-template #elseBlock>
-            <div class="addedToCart">
-                <button [disabled]="product_quantity === 0" (click)="decrementQuantity(product)" mat-button>-</button>
-                <div>quantity:{{product_quantity}}</div>
-                <button (click)="addToCart(product)" mat-button>+</button>
+        <div *ngIf="!is_admin_mode">
+            <div class="addedToCart" *ngIf="!isInCart else elseBlock">
+                <button (click)="addToCart(product)" mat-button>add to cart</button>
             </div>
-        </ng-template>
+            <ng-template #elseBlock>
+                <div class="addedToCart">
+                    <button [disabled]="product_quantity === 0" (click)="decrementQuantity(product)"
+                        mat-button>-</button>
+                    <div>quantity:{{product_quantity}}</div>
+                    <button (click)="addToCart(product)" mat-button>+</button>
+                </div>
+            </ng-template>
+        </div>
+        <div *ngIf="is_admin_mode">
+            <button mat-button (click)="editProduct(product)">Edit</button>
+        </div>
     </div>
 </div>

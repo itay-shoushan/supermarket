@@ -2,8 +2,11 @@
     <div class="example-nav">
         <button routerLink="home" mat-button>Home</button>
     </div>
-    <div class="example-nav">
+    <div class="example-nav" *ngIf="this.current_user && this.current_role === 'viewer'">
         <button routerLink="shopping" mat-button>Shopping</button>
+    </div>
+    <div class="example-nav" *ngIf="this.current_user && this.current_role === 'admin'">
+        <button routerLink="management" mat-button>Admin</button>
     </div>
     <span class="example-spacer"></span>
     <div *ngIf="current_user" class="example-nav">
