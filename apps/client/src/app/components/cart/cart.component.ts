@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ignoreElements, reduce, map, Observable } from 'rxjs';
+import { ignoreElements, reduce, map, Observable, debounceTime } from 'rxjs';
 import { ICartDetail } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -14,9 +15,7 @@ export class CartComponent implements OnInit, OnChanges {
   @Input() cart_id: number = -1;
   products_in_cart$: Observable<ICartDetail[]>;
   total_cart_price$: Observable<number>;
-  // total_cart_price: number;
   @Input() inCheckout: boolean = false;
-
   constructor(private cartService: CartService, private router: Router) {
 
   }
@@ -51,7 +50,6 @@ export class CartComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit(): void {
-
 
   }
 

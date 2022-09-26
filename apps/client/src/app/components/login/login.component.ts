@@ -27,7 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.current_role = this.authService.getUserData().role;
+    if (this.authService.getUserData()) {
+      this.current_role = this.authService.getUserData()?.role;
+    }
   }
   onLogin(form: NgForm) {
     const currentUser: IUserLogin = {
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", result?.token);
         this._isLoggedIn$.next(true);
         this.isLoggedInEvent.emit(true);
-        this.current_role = this.authService.getUserData().role;
+        this.current_role = this.authService.getUserData()?.role;
       },
       complete: () => {
         alert("login succeed");

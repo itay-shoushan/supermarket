@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
@@ -10,12 +12,16 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class HomeComponent implements OnInit {
   public isUserLoggedIn: boolean;
-  public userStatus: number = 2;
+  public currentBuyerID: number;
+  public currentCartID: number;
+  total_cart_price$: Observable<number>;
+
+  // public userStatus: number = 2;
   // 0 - first time, 1 - start buying, 2 - continue 
   public numberOfProducts: number;
   public numberOfOrders: number;
 
-  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService) {
+  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService,private router:Router) {
 
 
   }
@@ -33,9 +39,26 @@ export class HomeComponent implements OnInit {
       this.cartService.allOrders$.subscribe((res: any) => {
         if (res) this.numberOfOrders = res.length
       })
+      const user = this.authService.getUserData();
+      this.currentBuyerID = user?.id;
+      if (this.currentBuyerID) {
+        this.cartService.getCart(this.currentBuyerID).subscribe({
+          error: (ex: any) => {
+            alert(ex?.error?.message);
+          },
+          next: (result: any) => {
+            this.currentCartID = result?.cart?.id;
+            this.cartService.getCartPrice(this.currentCartID);
+            this.total_cart_price$ = this.cartService.total_cart_price$;
+          }
+        })
+      }
     }
   }
   isLogged(isLoggedIn: any) {
     this.isUserLoggedIn = isLoggedIn;
+  }
+  navigateToShopping(){
+    this.router.navigate(['/shopping'])
   }
 }

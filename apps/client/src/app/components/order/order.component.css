@@ -5,3 +5,15 @@ mat-grid-tile {
 mat-grid-list {
     margin: 10px;
 }
+
+table {
+    width: 90%;
+    /* margin-top: 25px; */
+    /* margin-bottom: 25px; */
+}
+
+
+td,
+th {
+    width: 25%;
+}

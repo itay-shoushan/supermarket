@@ -1,6 +1,7 @@
 <div *ngIf="products_in_cart$|async">
     <h1> my cart
-        <button *ngIf="(products_in_cart$|async) && !inCheckout && ((total_cart_price$|async))" mat-raised-button color="warn" (click)="clearCart(this.cart_id)"> CLEAR ALL PRODUCTS </button>
+        <button *ngIf="(products_in_cart$|async) && !inCheckout && ((total_cart_price$|async))" mat-raised-button
+            color="warn" (click)="clearCart(this.cart_id)"> CLEAR ALL PRODUCTS </button>
         <button *ngIf="inCheckout" (click)="backToShopping(this.cart_id)" mat-button>
             back to shop
         </button>
@@ -19,7 +20,8 @@
         </div>
 
         <div *ngIf="!inCheckout">
-            <button (click)="moveToCheckout()" mat-button> move to checkout </button>
+            <button [disabled]="!(total_cart_price$|async)" (click)="moveToCheckout()" mat-button> move to checkout
+            </button>
         </div>
 
     </div>

@@ -2,7 +2,7 @@
     <h1 *ngIf="!(this.isLoggedIn$ | async)">Login</h1>
     <div *ngIf="(this.isLoggedIn$ | async)">
         <h4>user already logged in</h4>
-        <h1 *ngIf="this.current_role ==='viewer'"><a routerLink="/shopping">Start/Continue Shopping !</a></h1>
+        <!-- <h1 *ngIf="this.current_role ==='viewer'"><a routerLink="/shopping">Start Shopping !</a></h1> -->
     </div>
     <form (submit)="onLogin(loginForm)" class="example-form" #loginForm="ngForm">
         <div>

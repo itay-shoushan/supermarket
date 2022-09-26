@@ -34,6 +34,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +74,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDividerModule,
     ScrollingModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDialogModule,
+    MatTableModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

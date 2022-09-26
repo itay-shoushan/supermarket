@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'order', component: OrderComponent, canActivate: [AuthGuard] },
   { path: 'management', component: ManagementComponent, canActivate: [RoleGuard] },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

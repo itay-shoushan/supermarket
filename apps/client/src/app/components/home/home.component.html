@@ -13,33 +13,35 @@
         </mat-grid-tile>
         <mat-grid-tile>
             <div>
-                <div *ngIf="this.numberOfProducts && this.numberOfOrders; else elseBlock">
+                <div class="topConteiner" *ngIf="this.isUserLoggedIn">
+                    <div *ngIf="!this.currentCartID">
+                        <p>Welcome!</p>
+                        <button (click)="navigateToShopping()" mat-raised-button color="primary">Start shopping</button>
+                    </div>
+                    <div *ngIf="this.currentCartID && !(total_cart_price$|async) ">
+                        <p>Welcome Back!</p>
+                        <button (click)="navigateToShopping()" mat-raised-button color="primary">Start shopping</button>
+                    </div>
+                    <div *ngIf="this.currentCartID && (total_cart_price$|async) ">
+                        <p>Welcome Back! you have open cart</p>
+                        <p>your current cart total of {{total_cart_price$|async|currency}} </p>
+                        <button (click)="navigateToShopping()" mat-raised-button color="primary">Continue
+                            shopping</button>
+                    </div>
+                </div>
+                <div>
+                    <img class="secondaryImg" src="/assets/shopping_main.jpg" alt="404">
+                </div>
+                <div class="bottomDiv" *ngIf="this.numberOfProducts && this.numberOfOrders; else elseBlock">
                     <h3>number of products available: {{this.numberOfProducts}} </h3>
                     <h3>number of orders: {{this.numberOfOrders}} </h3>
                 </div>
                 <ng-template #elseBlock>
-                    <div>
+                    <div class="bottomDiv">
                         <h3>log in to see more details about our store !!</h3>
                     </div>
                 </ng-template>
-                <div>
-                    <img class="secondaryImg" src="/assets/shopping_main.jpg" alt="404">
-                </div>
-                <div class="topConteiner" *ngIf="this.isUserLoggedIn">
-                    <div *ngIf="this.userStatus === 0 ">
-                        <p>Welcome to your first shopping</p>
-                        <button mat-button>Start shopping</button>
-                    </div>
-                    <div *ngIf="this.userStatus === 1 ">
-                        <button mat-button>Welcome Back! Start shopping</button>
-                        <p>your last purchase - 1670$</p>
-                    </div>
-                    <div *ngIf="this.userStatus === 2 ">
-                        <p>you have an open cart ! </p>
-                        <p>current cart - 1560$</p>
-                        <button mat-button>Continue shopping current cart</button>
-                    </div>
-                </div>
+
             </div>
         </mat-grid-tile>
     </mat-grid-list>
