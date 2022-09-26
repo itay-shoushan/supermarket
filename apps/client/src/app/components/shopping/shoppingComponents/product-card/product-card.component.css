@@ -1,9 +1,14 @@
 .card {
-    width: var(--cardWidth);
-    height: var(--cardHeight);
+    width: 9rem;
+    height: 200px;
     margin: 6px;
     box-sizing: border-box;
     background-color: inherit;
+}
+
+.card-img-top {
+    padding: 5px;
+    height: 100px;
 }
 
 .card-text {
