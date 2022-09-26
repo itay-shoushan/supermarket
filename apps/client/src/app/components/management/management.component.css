@@ -6,3 +6,15 @@ mat-form-field {
 .submitBtn {
     margin: 10px;
 }
+
+.submitBtn button {
+    margin-right: 15px;
+}
+
+.exitEditBtn {
+    margin-left: 15px;
+}
+
+.adminHeader {
+    margin-top: 10px;
+}

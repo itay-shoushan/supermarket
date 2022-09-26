@@ -8,12 +8,46 @@ mat-grid-list {
 
 table {
     width: 90%;
-    /* margin-top: 25px; */
-    /* margin-bottom: 25px; */
 }
-
 
 td,
 th {
     width: 25%;
+}
+
+.cartView {
+    background-color: lightblue;
+    height: 560px;
+    margin-top: 10px;
+}
+
+.orderView {
+    background-color: lightblue;
+    height: 560px;
+    margin-top: 10px;
+}
+
+.orderHeader {
+    margin-top: 15px;
+}
+
+.stageA {
+    display: flex;
+}
+
+.stageB {
+    margin-top: 20px;
+}
+
+
+.stageC {
+    margin-left: 20px;
+}
+
+mat-form-field {
+    margin: 10px;
+}
+
+.receiptHeader {
+    margin-top: 20px;
 }

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ICategory } from 'src/app/models/category.model';
 import { IAddProduct, IProduct } from 'src/app/models/product.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -16,16 +18,22 @@ export class ManagementComponent implements OnInit {
   products$: Observable<IProduct[]>;
   public currentProduct: IProduct | null;
   public editMode: boolean = false
-  public none: ''
+  public selectedCategory: number;
+
+  categories$: Observable<ICategory[]>;
+
   // public currentCartID: number;
   // public nameValue: string;
   // public categoryIDValue: number;
   // public priceValue: number;
   // public pictureValue: string = '';
-  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router) {
+  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router,private categoriesService:CategoriesService) {
 
     this.productsService.loadProducts();
     this.products$ = this.productsService.products$;
+
+    this.categoriesService.loadCategories();
+    this.categories$ = this.categoriesService.categories$;
 
   }
 

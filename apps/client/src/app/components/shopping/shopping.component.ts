@@ -1,11 +1,9 @@
-import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ICartDetail } from 'src/app/models/cart.model';
-import { IProduct, IProductInCart } from 'src/app/models/product.model';
+import { IProduct } from 'src/app/models/product.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
@@ -15,13 +13,14 @@ import { ProductsService } from 'src/app/services/products.service';
   templateUrl: './shopping.component.html',
   styleUrls: ['./shopping.component.css']
 })
-export class ShoppingComponent implements OnInit, OnChanges {
+export class ShoppingComponent implements OnInit, OnChanges, OnDestroy {
   // public cart: IProductInCart[] = [];
   // public products: IProduct[] = []
   private currentBuyerID: number;
   public currentCartID: number;
   public selectedCategory: number;
   public is_admin_mode: boolean = false;
+  public isLoading: boolean = false;
   products$: Observable<IProduct[]>;
   searchProductFormControl = new FormControl('');
   // @Output() currentCartIDEvent = new EventEmitter<number>();
@@ -30,6 +29,7 @@ export class ShoppingComponent implements OnInit, OnChanges {
   // public currentCartDetails$: Observable<ICartDetail[]>;
 
   constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router) {
+    this.isLoading = true;
     const user = this.authService.getUserData();
     this.currentBuyerID = user?.id;
     this.productsService.loadProducts();
@@ -39,10 +39,12 @@ export class ShoppingComponent implements OnInit, OnChanges {
       this.cartService.getCart(this.currentBuyerID).subscribe({
         error: (ex: any) => {
           alert(ex?.error?.message);
+          this.isLoading = false;
+          router.navigate(['/home'])
         },
         next: (result: any) => {
           this.currentCartID = result?.cart?.id;
-          // this.currentCartIDEvent.emit(result?.cart?.id)
+          this.isLoading = false;
         }
       })
     }
@@ -57,6 +59,7 @@ export class ShoppingComponent implements OnInit, OnChanges {
   //   }
   // }
   ngOnInit(): void {
+
     // console.log(this.selectedCategory);
 
     this.searchProductFormControl.valueChanges.pipe(debounceTime(500)).subscribe((v) => {
@@ -103,5 +106,7 @@ export class ShoppingComponent implements OnInit, OnChanges {
     //   this.cartService.getCartDetails(this.currentCartID);
     // }
   }
-
+  ngOnDestroy(): void {
+    this.isLoading = false;
+  }
 }

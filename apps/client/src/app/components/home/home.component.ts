@@ -14,10 +14,10 @@ export class HomeComponent implements OnInit {
   public isUserLoggedIn: boolean;
   public currentBuyerID: number;
   public currentCartID: number;
+  public current_role: string = '';
+
   total_cart_price$: Observable<number>;
 
-  // public userStatus: number = 2;
-  // 0 - first time, 1 - start buying, 2 - continue 
   public numberOfProducts: number;
   public numberOfOrders: number;
 
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     const currentToken = localStorage.getItem("token");
-    this.isUserLoggedIn = (!!currentToken)
+    this.isUserLoggedIn = (!!currentToken);
 
     if (this.isUserLoggedIn) {
       this.productsService.loadProducts();
@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
             this.currentCartID = result?.cart?.id;
             this.cartService.getCartPrice(this.currentCartID);
             this.total_cart_price$ = this.cartService.total_cart_price$;
+            this.current_role = this.authService.getUserData()?.role;
           }
         })
       }
@@ -60,5 +61,8 @@ export class HomeComponent implements OnInit {
   }
   navigateToShopping(){
     this.router.navigate(['/shopping'])
+  }
+  navigateAdmin(){
+    this.router.navigate(['/management'])
   }
 }

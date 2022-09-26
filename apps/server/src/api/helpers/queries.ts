@@ -9,7 +9,7 @@ export function registerUserQuery(): string {
 }
 //
 export function getProductsQuery(): string {
-    return `SELECT * FROM shopping.products;`
+    return `SELECT * FROM shopping.products ORDER BY category_id;`
 }
 export function getProductByNameQuery(): string {
     return `SELECT * FROM shopping.products WHERE name LIKE ?;`

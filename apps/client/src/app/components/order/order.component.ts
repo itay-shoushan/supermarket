@@ -46,7 +46,6 @@ export class OrderComponent implements OnInit {
   searchProductFormControl = new FormControl('');
 
   products_in_cart$: Observable<ICartDetail[]>;
-  private products_in_cart_subject = new BehaviorSubject<ICartDetail[]>([]);
 
   receiptColumns: string[] = ['name', 'price', 'quantity', 'total_price'];
 

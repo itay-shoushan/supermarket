@@ -1,0 +1,13 @@
+.totalPrice {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: fit-content;
+    padding: 10px 20px;
+    margin-left: 12px;
+    color: white;
+    background-color: #3f51b5;
+}
+
+.emptyCart {
+    margin: 20px;
+}

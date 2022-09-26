@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="row">
-        <div style="background-color: lightblue;" class="col-6">
+    <div class="row" style="height: 100%;">
+        <div class="col-4">
             <div class="container">
-                <div class="row">
-                    <!-- <form class="example-form">
+                <!-- <div class="row">
+                    <form class="example-form">
                         <mat-form-field class="example-full-width" appearance="fill">
                             <mat-label>Search prouduct</mat-label>
                             <input type="text" matInput [formControl]="searchProductFormControl"
@@ -13,66 +13,82 @@
                                 <mat-icon>close</mat-icon>
                             </button>
                         </mat-form-field>
-                    </form> -->
-                </div>
+                    </form>
+                </div> -->
                 <div *ngIf="currentCartID" class="row">
-                    <app-cart [inCheckout]="true" [cart_id]="currentCartID"></app-cart>
+                    <div class="cartView">
+                        <app-cart [inCheckout]="true" [cart_id]="currentCartID"></app-cart>
+                    </div>
                 </div>
             </div>
         </div>
-        <div style="background-color: lightblue;" class="col-6">
+        <div class="col-8">
             <div *ngIf="!receipt" class="row">
-                <form #checkoutForm="ngForm" (submit)="checkout(checkoutForm)">
-                    <div class="example-form">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>Select City</mat-label>
-                            <mat-select #user_city="ngModel" name="user_city" ngModel required>
-                                <mat-option value="this.currentBuyer.city">{{this.currentBuyer.city}}</mat-option>
-                                <mat-option disabled="true" value="''">Select City</mat-option>
-                                <mat-option *ngFor="let city of cities" [value]="city">{{city}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error class="matErrorAccount" *ngIf="user_city.value ===''">City must be picked
-                            </mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>Street</mat-label>
-                            <input
-                                [(ngModel)]="this.currentBuyer ? this.currentBuyer.street : this.checkoutForm.value.user_street"
-                                #user_street="ngModel" minlength="2" maxlength="18" required type="text"
-                                name="user_street" matInput placeholder="Street" ngModel>
-                            <!-- <mat-error class="matErrorAccount" *ngIf="user_street.invalid">Street must be filled
-                            </mat-error> -->
-                        </mat-form-field>
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>Shipping Date</mat-label>
-                            <input max="{{maxDate | date:'yyyy-MM-dd'}}" min="{{currentDate | date:'yyyy-MM-dd'}}"
-                                #shipping_date="ngModel" required type="date" name="shipping_date" matInput
-                                placeholder="Shipping Date" ngModel>
-                        </mat-form-field>
-                        <mat-divider></mat-divider>
-                        <h3>Payment</h3>
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>Credit Card</mat-label>
-                            <input #user_credit_card="ngModel" min="1111" max="9999" minlength="4" maxlength="4"
-                                required type="number" name="user_credit_card" matInput placeholder="Credit Card"
-                                ngModel>
-                            <mat-error class="matErrorAccount" *ngIf="user_credit_card.invalid">Please enter 4 last
-                                digits
-                                only
-                            </mat-error>
-                        </mat-form-field>
-                        <div>
-                            <button type="submit" mat-raised-button color="primary">submit</button>
+                <div class="orderView">
+                    <form #checkoutForm="ngForm" (submit)="checkout(checkoutForm)">
+                        <div class="example-form">
+                            <h1 class="orderHeader">Checkout</h1>
+                            <h3 style="margin-left: 10px;">Order Details:</h3>
+                            <div class="stageA">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Select City</mat-label>
+                                    <mat-select #user_city="ngModel" name="user_city" ngModel required>
+                                        <mat-option value="this.currentBuyer.city">{{this.currentBuyer.city}}
+                                        </mat-option>
+                                        <mat-option disabled="true" value="''">Select City</mat-option>
+                                        <mat-option *ngFor="let city of cities" [value]="city">{{city}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="user_city.value ===''">City must be picked
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Street</mat-label>
+                                    <input
+                                        [(ngModel)]="this.currentBuyer ? this.currentBuyer.street : this.checkoutForm.value.user_street"
+                                        #user_street="ngModel" minlength="2" maxlength="18" required type="text"
+                                        name="user_street" matInput placeholder="Street" ngModel>
+                                    <mat-error *ngIf="user_street.invalid">Street must be filled
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Shipping Date</mat-label>
+                                    <input max="{{maxDate | date:'yyyy-MM-dd'}}"
+                                        min="{{currentDate | date:'yyyy-MM-dd'}}" #shipping_date="ngModel" required
+                                        type="date" name="shipping_date" matInput placeholder="Shipping Date" ngModel>
+                                    <mat-error *ngIf="shipping_date.invalid">Date must be filled
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="stageB">
+                                <h1>Payment</h1>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Credit Card</mat-label>
+                                    <input #user_credit_card="ngModel" min="1111" max="9999" minlength="4" maxlength="4"
+                                        required type="number" name="user_credit_card" matInput
+                                        placeholder="Credit Card" ngModel>
+                                    <mat-error *ngIf="user_credit_card.invalid">Please enter 4 last
+                                        digits
+                                        only
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="stageC">
+                                <button [disabled]="checkoutForm.invalid" type="submit" mat-raised-button
+                                    color="primary">submit</button>
+                                <mat-error *ngIf="checkoutForm.invalid"> please fill all the fields to submit the order
+                                </mat-error>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <div *ngIf="receipt && (this.products_in_cart$|async) && (this.currentOrder)" class="row">
-                <div>
-                    <h2>receipt <button (click)="navigateHome()" mat-button
-                        color="primary">Back Home</button> </h2>
-                    <h4> your order number: {{this.currentOrder}}  </h4>
+                <div class="orderView">
+                    <h2 class="receiptHeader">receipt <button (click)="navigateHome()" mat-button color="primary">Back
+                            Home</button> </h2>
+                    <h4> your order number: {{this.currentOrder}} </h4>
                     <h4> order details: </h4>
                     <table mat-table [dataSource]="(this.products_in_cart$|async) || []" class="mat-elevation-z8">
 
