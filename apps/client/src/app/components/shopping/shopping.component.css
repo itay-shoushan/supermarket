@@ -5,6 +5,19 @@
     width: max-content;
 }
 
+#shoppingDiv {
+    height: 100%;
+}
+
+#searchProductStyle {
+    margin: 5px;
+}
+#searchProductFont{
+    font-size: 12px;
+}
+#formStyleField{
+    height: 20px;
+}
 .cartView {
     background-color: lightblue;
     height: 560px;

@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngIf="!isLoading" class="row" style="height: 100%;">
+    <div *ngIf="!isLoading" id="shoppingDiv" class="row" >
         <div class="col-4" *ngIf="currentCartID">
             <div class="cartView">
                 <app-cart [inCheckout]="false" [cart_id]="currentCartID"></app-cart>
@@ -11,10 +11,10 @@
                     <div class="row">
                         <app-categories [selectedCategory]="this.selectedCategory"></app-categories>
                     </div>
-                    <div style="margin: 5px;" class="row">
-                        <div style="font-size: 12px;">
+                    <div id="searchProductStyle"  class="row">
+                        <div id="searchProductFont">
                             <form class="example-form">
-                                <mat-form-field style="height: 20px;" class="example-full-width" appearance="fill">
+                                <mat-form-field id="formStyleField"  class="example-full-width" appearance="fill">
                                     <mat-label>Search prouduct</mat-label>
                                     <input type="text" matInput [formControl]="searchProductFormControl"
                                         placeholder="Search product">
