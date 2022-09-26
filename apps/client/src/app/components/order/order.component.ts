@@ -1,35 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, debounceTime, filter, map, Observable } from 'rxjs';
+import { debounceTime, map, Observable } from 'rxjs';
 import { ICartDetail, ICheckoutCart, IUnavailableDate } from 'src/app/models/cart.model';
 import { IUser } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CitiesService } from 'src/app/services/cities.service';
-
-// export interface PeriodicElement {
-//   name: string;
-//   position: number;
-//   weight: number;
-//   symbol: string;
-// }
-// [ { "cart_id": 32, "product_id": 1, "name": "eggs L size", "price": 5, "quantity": 2, "total_price": 10 },
-// { "cart_id": 32, "product_id": 3, "name": "cucumber", "price": 3, "quantity": 1, "total_price": 3 },
-// { "cart_id": 32, "product_id": 4, "name": "tomato", "price": 2, "quantity": 1, "total_price": 2 } 
-// ]
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-//   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-//   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-//   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-//   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-//   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-//   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-//   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-//   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-//   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-// ];
 
 @Component({
   selector: 'app-order',
@@ -43,13 +20,15 @@ export class OrderComponent implements OnInit {
   public currentDate: Date = new Date;
   public maxDate: Date = new Date(new Date().setMonth(new Date().getMonth() + 1));
   public currentOrder: number;
-  searchProductFormControl = new FormControl('');
+  public receipt: boolean = false;
+  public isDateValid: boolean = true;
 
+  searchProductFormControl = new FormControl('');
   products_in_cart$: Observable<ICartDetail[]>;
+  unavailableDates$: Observable<IUnavailableDate[]>;
 
   receiptColumns: string[] = ['name', 'price', 'quantity', 'total_price'];
 
-  public receipt: boolean = false;
   constructor(private authService: AuthService, private cartService: CartService, private citiesService: CitiesService, private router: Router) {
     this.cities = this.citiesService.cities;
     this.searchProductFormControl.valueChanges.pipe(debounceTime(500)).subscribe((v) => {
@@ -59,18 +38,13 @@ export class OrderComponent implements OnInit {
           .subscribe((data: any) => {
             console.log(data);
           })
-        // this.productsService.filterProductsByValue(v);
-        // if (this.selectedCategory === -1) this.selectedCategory--;
-        // else this.selectedCategory = -1
-      }
-      else {
-        // this.productsService.loadProducts();
-        // if (this.selectedCategory === -1) this.selectedCategory--;
-        // else this.selectedCategory = -1
       }
     })
   }
   ngOnInit(): void {
+    this.cartService.getUnavailableDates();
+    this.unavailableDates$ = this.cartService.unavailableDates$;
+
     const user = this.authService.getUserData();
     this.currentBuyer = user;
     if (this.currentBuyer?.id) {
@@ -84,9 +58,7 @@ export class OrderComponent implements OnInit {
         }
       })
     }
-
   }
-
   async checkout(form: NgForm) {
     if (!this.currentCartID || form.invalid) return
     try {
@@ -113,4 +85,23 @@ export class OrderComponent implements OnInit {
   navigateHome() {
     this.router.navigate(['/home'])
   }
+  validate(input_date: Date) {
+    if (!this.unavailableDates$) return this.isDateValid = true;
+    else {
+      this.unavailableDates$.subscribe(
+        (data: IUnavailableDate[]) => {
+          data.map((date: IUnavailableDate) => {
+            const currentDate = new Date(date.date);
+            const currentDateInput = new Date(input_date);
+            if (getFullDateIsraelString(currentDate) === getFullDateIsraelString(currentDateInput)) return this.isDateValid = false;
+            else return this.isDateValid = true
+          })
+        }
+      )
+      return
+    }
+  }
+}
+export function getFullDateIsraelString(date: Date): string {
+  return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`
 }

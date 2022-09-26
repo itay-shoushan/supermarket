@@ -9,7 +9,9 @@ mat-grid-list {
 table {
     width: 90%;
 }
-
+.orderDiv{
+    height: 100%;
+}
 td,
 th {
     width: 25%;
@@ -35,7 +37,9 @@ th {
     display: flex;
 }
 
-.stageB {
+.stageB,
+.errorSign,
+.receiptHeader {
     margin-top: 20px;
 }
 
@@ -46,8 +50,4 @@ th {
 
 mat-form-field {
     margin: 10px;
-}
-
-.receiptHeader {
-    margin-top: 20px;
 }

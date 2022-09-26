@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { IProduct, IProductInCart } from 'src/app/models/product.model';
+import { IProduct } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-products-paginator',
@@ -8,14 +7,15 @@ import { IProduct, IProductInCart } from 'src/app/models/product.model';
   styleUrls: ['./products-paginator.component.css']
 })
 export class ProductsPaginatorComponent implements OnInit {
+  p: number = 1;
+
   @Input() columnSize: string = '';
   @Input() pageSize: number = 12;
-  // @Input() products: any[] | null = [];
   @Input() products: IProduct[] = [];
-  p: number = 1;
-  @Output() editProductEvent = new EventEmitter<IProduct>();
   @Input() cart_id: number;
   @Input() is_admin_mode: boolean;
+
+  @Output() editProductEvent = new EventEmitter<IProduct>();
 
   constructor() {
 

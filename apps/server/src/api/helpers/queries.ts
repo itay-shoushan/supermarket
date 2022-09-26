@@ -82,9 +82,6 @@ export function deleteAllProductsFromCartQuery(): string {
 export function isCartExistQuery(): string {
     return `SELECT * FROM shopping.carts WHERE id = ? AND status = 1;`
 }
-// export function getAllUserCartQuery(): string {
-//     return `SELECT * FROM shopping.carts WHERE user_id = ? ORDER BY created_at DESC;`
-// }
 export function isProductInCartQuery(): string {
     return `SELECT * FROM shopping.cart_details WHERE cart_id = ? AND product_id = ?;`
 }

@@ -21,8 +21,7 @@ export class HomeComponent implements OnInit {
   public numberOfProducts: number;
   public numberOfOrders: number;
 
-  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService,private router:Router) {
-
+  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router) {
 
   }
 
@@ -59,10 +58,10 @@ export class HomeComponent implements OnInit {
   isLogged(isLoggedIn: any) {
     this.isUserLoggedIn = isLoggedIn;
   }
-  navigateToShopping(){
+  navigateToShopping() {
     this.router.navigate(['/shopping'])
   }
-  navigateAdmin(){
+  navigateAdmin() {
     this.router.navigate(['/management'])
   }
 }

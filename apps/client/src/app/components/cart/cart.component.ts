@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ignoreElements, reduce, map, Observable, debounceTime } from 'rxjs';
+import {Observable} from 'rxjs';
 import { ICartDetail } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
 

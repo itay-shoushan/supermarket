@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, lastValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom,  Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ICartDetail, ICheckoutCart, IOrder, IUnavailableDate } from '../models/cart.model';
-import { IProduct, IProductInCart } from '../models/product.model';
+import {  IProductInCart } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,9 @@ export class CartService {
   }
   get allOrders$(): Observable<IOrder[]> {
     return this.allOrdersSubject.asObservable();
+  }
+  get unavailableDates$(): Observable<IUnavailableDate[]> {
+    return this.unavailableDatesSubject.asObservable();
   }
   getCart(user_id: number) {
     const getCartUrl = `${this.serverUrl}/carts/user_cart`;

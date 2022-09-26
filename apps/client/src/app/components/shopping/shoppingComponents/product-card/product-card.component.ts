@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { unAuthError } from 'src/app/guards/helper';
 import { IProduct, IProductInCart } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -19,14 +18,10 @@ export class ProductCardComponent implements OnInit {
   public product_quantity: number = 0;
   public isInCart: boolean = false;
 
-  // @Output() add_to_cart_output = new EventEmitter<IProductInCart>();
+  constructor(private cartService: CartService, private route: Router) { }
 
-  constructor(private cartService: CartService, private route: Router) {
+  ngOnInit(): void { }
 
-  }
-
-  ngOnInit(): void {
-  }
   async addToCart(product: IProduct) {
     this.product_quantity++;
     this.isInCart = true;
@@ -42,18 +37,6 @@ export class ProductCardComponent implements OnInit {
   }
   async editProduct(product: IProduct) {
     this.editProductEvent.emit(product)
-
-    // this.product_quantity++;
-    // this.isInCart = true;
-    // const current_product: IProductInCart = {
-    //   product: product,
-    //   quantity: 1
-    // }
-    // try {
-    //   const response = await this.cartService.addProductToCart(current_product, this.cart_id);
-    // } catch (ex: any) {
-    //   ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
-    // }
   }
   async decrementQuantity(product: IProduct) {
     if (this.product_quantity === 0) return alert("error please try again");
@@ -73,5 +56,4 @@ export class ProductCardComponent implements OnInit {
       alert("error")
     }
   }
-
 }

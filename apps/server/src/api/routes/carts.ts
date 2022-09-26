@@ -4,7 +4,6 @@ import { validateAddProduct } from "../validations/addToCart";
 const router = express.Router();
 
 
-// router.post("/create_cart/:user_id", crrateCartToUserHandler);
 router.get("/user_cart/:user_id", getCartByUserIDHandler);
 router.get("/all_orders", getAllOrdersHandler);
 router.get("/unavailable_shipping_dates", getUnavailableShippingDatesHandler);

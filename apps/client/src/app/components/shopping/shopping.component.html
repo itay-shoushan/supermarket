@@ -30,7 +30,6 @@
                         <app-products-paginator [is_admin_mode]="this.is_admin_mode" [cart_id]="this.currentCartID"
                             [products]="(products$|async) || []" [pageSize]="10">
                         </app-products-paginator>
-                        <!-- [columnSize]="'col-2'" -->
                     </div>
                     <ng-template #elseBlock>
                         <div class="noProducts">

@@ -9,3 +9,8 @@
 button {
     margin: auto;
 }
+
+.cartItemDetails {
+    display: flex;
+    justify-content: space-between;
+}

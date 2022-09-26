@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -13,9 +13,7 @@ import { ProductsService } from 'src/app/services/products.service';
   templateUrl: './shopping.component.html',
   styleUrls: ['./shopping.component.css']
 })
-export class ShoppingComponent implements OnInit, OnChanges, OnDestroy {
-  // public cart: IProductInCart[] = [];
-  // public products: IProduct[] = []
+export class ShoppingComponent implements OnInit, OnDestroy {
   private currentBuyerID: number;
   public currentCartID: number;
   public selectedCategory: number;
@@ -23,10 +21,6 @@ export class ShoppingComponent implements OnInit, OnChanges, OnDestroy {
   public isLoading: boolean = false;
   products$: Observable<IProduct[]>;
   searchProductFormControl = new FormControl('');
-  // @Output() currentCartIDEvent = new EventEmitter<number>();
-  // searchProductInput: FormControl<string>;
-  // searchProductInput: string = '';
-  // public currentCartDetails$: Observable<ICartDetail[]>;
 
   constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router) {
     this.isLoading = true;
@@ -49,19 +43,8 @@ export class ShoppingComponent implements OnInit, OnChanges, OnDestroy {
       })
     }
   }
-  // async init() {
-  //   try {
-  //     const response = await this.productsService.loadProducts();
-  //     console.log(response);
-  //   } catch (ex: any) {
-  //     console.log(ex);
-  //     ex?.error?.message ? alert(ex?.error?.message) : alert("error please try again")
-  //   }
-  // }
+
   ngOnInit(): void {
-
-    // console.log(this.selectedCategory);
-
     this.searchProductFormControl.valueChanges.pipe(debounceTime(500)).subscribe((v) => {
       if (v) {
         this.productsService.filterProductsByValue(v);
@@ -74,38 +57,8 @@ export class ShoppingComponent implements OnInit, OnChanges, OnDestroy {
         else this.selectedCategory = -1
       }
     })
-
-    // this.searchProductInput.valueChanges.subscribe((r: any) => {
-    //   console.log(r);
-
-    // })
-    // this.productsService.loadProducts();
-    // this.products$ = this.productsService.products$;
-    // this.cartService.getCartDetails(this.currentCartID);
   }
-  clearInput() {
 
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes);
-
-    // console.log(this.selectedCategory);
-    // console.log(this.searchProductFormControl.value);
-    // this.searchProductInput.valueChanges.subscribe((res: any) => {
-    //   console.log(res);
-    // })
-    // console.log(this.searchProductInput);
-
-    // console.log(this.searchProductInput);
-
-    // this.products$ = this.productsService.products$;
-    // console.log(this.currentCartID);
-
-    // if (this.currentCartID) {
-    //   console.log(this.currentCartID);
-    //   this.cartService.getCartDetails(this.currentCartID);
-    // }
-  }
   ngOnDestroy(): void {
     this.isLoading = false;
   }

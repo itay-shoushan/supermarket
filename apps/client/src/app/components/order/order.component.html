@@ -1,20 +1,7 @@
 <div class="container">
-    <div class="row" style="height: 100%;">
+    <div class="row orderDiv">
         <div class="col-4">
             <div class="container">
-                <!-- <div class="row">
-                    <form class="example-form">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>Search prouduct</mat-label>
-                            <input type="text" matInput [formControl]="searchProductFormControl"
-                                placeholder="Search product">
-                            <button *ngIf="searchProductFormControl.value" matSuffix mat-icon-button
-                                aria-label="Clear" (click)="searchProductFormControl.setValue('')">
-                                <mat-icon>close</mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </form>
-                </div> -->
                 <div *ngIf="currentCartID" class="row">
                     <div class="cartView">
                         <app-cart [inCheckout]="true" [cart_id]="currentCartID"></app-cart>
@@ -55,10 +42,16 @@
                                     <mat-label>Shipping Date</mat-label>
                                     <input max="{{maxDate | date:'yyyy-MM-dd'}}"
                                         min="{{currentDate | date:'yyyy-MM-dd'}}" #shipping_date="ngModel" required
-                                        type="date" name="shipping_date" matInput placeholder="Shipping Date" ngModel>
+                                        type="date" name="shipping_date" matInput placeholder="Shipping Date" ngModel
+                                        (change)="validate(shipping_date.value)">
                                     <mat-error *ngIf="shipping_date.invalid">Date must be filled
                                     </mat-error>
                                 </mat-form-field>
+                            </div>
+                            <div *ngIf="!isDateValid">
+                                <h4 style="color: red; margin-left: 20px;"> the selected delivery date is unavailable,
+                                    please select another day.
+                                </h4>
                             </div>
                             <mat-divider></mat-divider>
                             <div class="stageB">
@@ -68,16 +61,15 @@
                                     <input #user_credit_card="ngModel" min="1111" max="9999" minlength="4" maxlength="4"
                                         required type="number" name="user_credit_card" matInput
                                         placeholder="Credit Card" ngModel>
-                                    <mat-error *ngIf="user_credit_card.invalid">Please enter 4 last
-                                        digits
-                                        only
+                                    <mat-error *ngIf="user_credit_card.invalid">Please enter 4 last digits only
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="stageC">
-                                <button [disabled]="checkoutForm.invalid" type="submit" mat-raised-button
-                                    color="primary">submit</button>
-                                <mat-error *ngIf="checkoutForm.invalid"> please fill all the fields to submit the order
+                                <button [disabled]="checkoutForm.invalid || !this.isDateValid" type="submit"
+                                    mat-raised-button color="primary">submit</button>
+                                <mat-error class="errorSign" *ngIf="checkoutForm.invalid"> please fill all the fields to
+                                    submit the order
                                 </mat-error>
                             </div>
                         </div>

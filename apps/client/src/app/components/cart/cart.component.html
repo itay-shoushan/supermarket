@@ -1,26 +1,25 @@
 <div *ngIf="products_in_cart$|async">
-    <div style="display: flex; justify-content: space-between; margin: 0 10px;">
-        <h1 style="margin-top: 6px; margin-left: 6px;"> my cart</h1>
-        <button style="height: 100%; margin-top: 10px;" *ngIf="!inCheckout && ((total_cart_price$|async))"
-            mat-stroked-button color="warn" (click)="clearCart(this.cart_id)"> CLEAR ALL PRODUCTS </button>
+    <div class="cartSection">
+        <h1 class="cartHeader"> my cart</h1>
+        <button class="clearCartBtn" *ngIf="!inCheckout && ((total_cart_price$|async))" mat-stroked-button color="warn"
+            (click)="clearCart(this.cart_id)"> CLEAR ALL PRODUCTS </button>
         <button *ngIf="inCheckout" (click)="backToShopping(this.cart_id)" mat-button>
             back to shop
         </button>
     </div>
-
     <p class="totalPrice">total:
         {{total_cart_price$|async|currency}}</p>
     <div class="emptyCart" *ngIf="isCartEmpty()">
         <h2>your cart is empty</h2>
     </div>
     <div>
-        <div style="overflow-x: hiddem; overflow-y: auto; height: 400px;">
+        <div class="cartDetails">
             <div *ngFor="let product of products_in_cart$ | async">
                 <app-cart-item [inCheckout]="this.inCheckout" [cart_product]="product"></app-cart-item>
                 <mat-divider></mat-divider>
             </div>
         </div>
-        <div style="position: absolute; bottom:15px;margin-left: 10px;" *ngIf="!inCheckout">
+        <div class="checkoutBtn" *ngIf="!inCheckout">
             <button [disabled]="!(total_cart_price$|async)" (click)="moveToCheckout()" mat-button> move to checkout
             </button>
         </div>

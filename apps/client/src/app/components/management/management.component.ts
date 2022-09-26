@@ -22,12 +22,7 @@ export class ManagementComponent implements OnInit {
 
   categories$: Observable<ICategory[]>;
 
-  // public currentCartID: number;
-  // public nameValue: string;
-  // public categoryIDValue: number;
-  // public priceValue: number;
-  // public pictureValue: string = '';
-  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router,private categoriesService:CategoriesService) {
+  constructor(private productsService: ProductsService, private cartService: CartService, private authService: AuthService, private router: Router, private categoriesService: CategoriesService) {
 
     this.productsService.loadProducts();
     this.products$ = this.productsService.products$;
@@ -85,7 +80,6 @@ export class ManagementComponent implements OnInit {
           alert("product added succeed!");
           form.reset();
         }
-
       } catch (error) {
         console.log(error);
         alert("add product failed please try again")

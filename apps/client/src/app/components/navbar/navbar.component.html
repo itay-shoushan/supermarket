@@ -13,6 +13,9 @@
         <span>Hello {{current_user | titlecase}}</span>
     </div>
     <div class="example-nav">
-        <span>connect to us - email sopping@gmail.com</span>
+        <span>connect with us via email - ziva9529@gmail.com</span>
+    </div>
+    <div class="example-nav"  *ngIf="this.current_user">
+        <button (click)="logout()" mat-button color="warn"> Logout </button>
     </div>
 </mat-toolbar>

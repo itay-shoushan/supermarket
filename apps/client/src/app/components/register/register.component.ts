@@ -13,11 +13,6 @@ import { CitiesService } from 'src/app/services/cities.service';
 export class RegisterComponent implements OnInit {
   public cities: string[] = [];
   constructor(private authService: AuthService, private route: Router, private citiesService: CitiesService) {
-    // this.cities = [
-    //   { value: 'telaviv-0', viewValue: 'Tel Aviv' },
-    //   { value: 'haifa-1', viewValue: 'Haifa' },
-    //   { value: 'rehovot-2', viewValue: 'Rehovot' },
-    // ]
     this.cities = this.citiesService.cities;
   }
   ngOnInit(): void {

@@ -74,8 +74,3 @@ export async function getAllOrdersService(): Promise<any> {
     const [result] = await getConnection().query(query);
     return result;
 }
-// export async function getAllUserCartsService(user_id: number): Promise<any> {
-//     const query = getAllUserCartQuery();
-//     const [result] = await getConnection().execute(query,[user_id]);
-//     return result[0];
-// }

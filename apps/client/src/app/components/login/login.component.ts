@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { IUserLogin } from 'src/app/models/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
