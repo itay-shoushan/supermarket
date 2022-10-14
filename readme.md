@@ -5,7 +5,7 @@ Online SuperMarket
 ## Description
 
 On my site, you can register and order some supermarket products.<br>
-As admin you can also edit your products in the store.<br>
+As admin you can also edit your products in the store.<br><br>
 Technologies I used in this project: Angular, Node.JS, MySQL, Docker.
 
 ## Images
