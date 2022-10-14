@@ -1,0 +1,31 @@
+<div>
+    <h1 *ngIf="!(this.isLoggedIn$ | async)">Login</h1>
+    <div *ngIf="(this.isLoggedIn$ | async)">
+        <h4>user already logged in</h4>
+    </div>
+    <form (submit)="onLogin(loginForm)" class="example-form" #loginForm="ngForm">
+        <div>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>User Email</mat-label>
+                <input [disabled]="(this.isLoggedIn$ | async) === true" #user_email="ngModel" minlength="2" required
+                    type="email" name="user_email" matInput placeholder="User Email" ngModel>
+                <mat-error *ngIf="user_email.invalid"> Email invalid </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Password</mat-label>
+                <input [disabled]="(this.isLoggedIn$ | async) === true" #user_password="ngModel" minlength="4" required
+                    type="password" name="user_password" matInput placeholder="User Password" ngModel>
+                <mat-error *ngIf="user_password.invalid"> Password invalid </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="buttonsSection">
+            <button [disabled]="(this.isLoggedIn$ | async) === true || loginForm.invalid" type="submit"
+                mat-raised-button color="primary">Login</button>
+            <button routerLink="/register" mat-button>Sign Up</button>
+            <mat-error class="errorLogin" *ngIf="loginForm.invalid"> fill all the fields to login</mat-error>
+        </div>
+    </form>
+
+</div>

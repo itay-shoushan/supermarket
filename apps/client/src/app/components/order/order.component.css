@@ -1,0 +1,64 @@
+mat-grid-tile {
+    background: lightblue;
+}
+
+mat-grid-list {
+    margin: 10px;
+}
+
+table {
+    width: 90%;
+}
+
+.orderDiv {
+    height: 100%;
+}
+
+td,
+th {
+    width: 25%;
+}
+
+#dateErr {
+    color: red;
+    margin-left: 20px;
+}
+
+.cartView {
+    background-color: lightblue;
+    height: 560px;
+    margin-top: 10px;
+}
+
+#orderD {
+    margin-left: 10px;
+}
+
+.orderView {
+    background-color: lightblue;
+    height: 560px;
+    margin-top: 10px;
+}
+
+.orderHeader {
+    margin-top: 15px;
+}
+
+.stageA {
+    display: flex;
+}
+
+.stageB,
+.errorSign,
+.receiptHeader {
+    margin-top: 20px;
+}
+
+
+.stageC {
+    margin-left: 20px;
+}
+
+mat-form-field {
+    margin: 10px;
+}

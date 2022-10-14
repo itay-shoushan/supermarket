@@ -1,0 +1,74 @@
+<ng-container>
+    <form #registerForm="ngForm" (submit)="onRegister(registerForm)" class="registerform">
+        <div class="example-form">
+            <div class="registerSection">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Account ID</mat-label>
+                    <input #user_id="ngModel" min="11111111" max="999999999" required type="number" name="user_id"
+                        matInput placeholder="Account ID" ngModel>
+                    <mat-error class="matErrorAccount" *ngIf="user_id.invalid">user ID must be filled
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input #user_email="ngModel" minlength="2" required type="email" name="user_email" matInput
+                        placeholder="Email" ngModel>
+                    <mat-error class="matErrorAccount" *ngIf="user_email.invalid">email must be filled and correct
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Passowrd</mat-label>
+                    <input #user_password="ngModel" minlength="6" maxlength="24" required type="password"
+                        name="user_password" matInput placeholder="Password" ngModel>
+                    <mat-error class="matErrorAccount" *ngIf="user_password.invalid">
+                        password must be minimum length of 6 chars
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Verify Passowrd</mat-label>
+                    <input #user_verify_password="ngModel" minlength="6" maxlength="24" required type="password"
+                        name="user_verify_password" matInput placeholder="Verify Password" ngModel>
+                    <mat-error class="matErrorAccount"
+                        *ngIf="registerForm.value.user_verify_password !== registerForm.value.user_password">
+                        passwords dident match
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="firstSectionValid(registerForm)" class="registerSection">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Select City</mat-label>
+                    <mat-select #user_city="ngModel" name="user_city" ngModel required>
+                        <mat-option disabled="true" value="''">Select City</mat-option>
+                        <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
+                    </mat-select>
+                    <mat-error class="matErrorAccount" *ngIf="user_city.value ===''">City must be picked</mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Street</mat-label>
+                    <input #user_street="ngModel" minlength="2" maxlength="18" required type="text" name="user_street"
+                        matInput placeholder="Street" ngModel>
+                    <mat-error class="matErrorAccount" *ngIf="user_street.invalid">Street must be filled
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input #user_first_name="ngModel" minlength="2" maxlength="18" required type="text"
+                        name="user_first_name" matInput placeholder="Name" ngModel>
+                    <mat-error class="matErrorAccount" *ngIf="user_first_name.invalid">Name must be filled
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Last Name</mat-label>
+                    <input #user_last_name="ngModel" minlength="2" maxlength="18" required type="text"
+                        name="user_last_name" matInput placeholder="Last Name" ngModel>
+                    <mat-error class="matErrorAccount" *ngIf="user_last_name.invalid">Last Name must be filled
+                    </mat-error>
+                </mat-form-field>
+                <div>
+                    <button [disabled]="registerForm.invalid" type="submit" mat-raised-button
+                        color="primary">submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>

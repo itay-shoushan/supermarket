@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+    <div class="example-nav">
+        <button routerLink="home" mat-button>Home</button>
+    </div>
+    <div class="example-nav" *ngIf="this.current_user && this.current_role === 'viewer'">
+        <button routerLink="shopping" mat-button>Shopping</button>
+    </div>
+    <div class="example-nav" *ngIf="this.current_user && this.current_role === 'admin'">
+        <button routerLink="management" mat-button>Admin</button>
+    </div>
+    <span class="example-spacer"></span>
+    <div *ngIf="current_user" class="example-nav">
+        <span>Hello {{current_user | titlecase}}</span>
+    </div>
+    <div class="example-nav">
+        <span>connect with us via email - ziva9529@gmail.com</span>
+    </div>
+    <div class="example-nav"  *ngIf="this.current_user">
+        <button (click)="logout()" mat-button color="warn"> Logout </button>
+    </div>
+</mat-toolbar>

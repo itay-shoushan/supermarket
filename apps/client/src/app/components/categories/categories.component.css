@@ -1,0 +1,18 @@
+.categoriesContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.category {
+    height: 36px;
+    margin: 5px;
+    width: -webkit-fill-available;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.selectedCategory {
+    font-weight: bold;
+    text-decoration: underline;
+}

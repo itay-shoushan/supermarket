@@ -1,0 +1,48 @@
+<ng-container>
+    <mat-grid-list cols="3" gutterSize="20" rowHeight="92%">
+        <mat-grid-tile>
+            <app-login (isLoggedInEvent)="isLogged($event)"></app-login>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div id="details">
+                <h1>welcome to my supermarket ! </h1>
+                <h3>here in our store you will have enjoy </h3>
+                <h3>high shopping experience</h3>
+                <img class="mainImg" src="/assets/market_2.png" alt="404">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div>
+                <div class="topConteiner" *ngIf="this.isUserLoggedIn && this.current_role !== 'admin'">
+                    <div *ngIf="!(total_cart_price$|async) ">
+                        <p>Welcome!</p>
+                        <button (click)="navigateToShopping()" mat-raised-button color="primary">Start shopping</button>
+                    </div>
+                    <div *ngIf="(total_cart_price$|async) ">
+                        <p>Welcome Back! you have open cart</p>
+                        <p>your current cart total of {{total_cart_price$|async|currency}} </p>
+                        <button (click)="navigateToShopping()" mat-raised-button color="primary">Continue
+                            shopping</button>
+                    </div>
+                </div>
+                <div *ngIf="this.current_role === 'admin'">
+                    <h2>admin logged in </h2>
+                    <button class="manageBtn" (click)="navigateAdmin()" mat-raised-button color="primary"> manage store
+                    </button>
+                </div>
+                <div>
+                    <img class="secondaryImg" src="/assets/market_1.png" alt="404">
+                </div>
+                <div class="bottomDiv" *ngIf="this.numberOfProducts && this.numberOfOrders; else elseBlock">
+                    <h3>number of products available: {{this.numberOfProducts}} </h3>
+                    <h3>number of orders: {{this.numberOfOrders}} </h3>
+                </div>
+                <ng-template #elseBlock>
+                    <div class="bottomDiv">
+                        <h3>log in to see more details about our store !!</h3>
+                    </div>
+                </ng-template>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</ng-container>

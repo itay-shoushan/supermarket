@@ -1,0 +1,49 @@
+<div class="container">
+    <div *ngIf="!isLoading" id="shoppingDiv" class="row" >
+        <div class="col-4" *ngIf="currentCartID">
+            <div class="cartView">
+                <app-cart [inCheckout]="false" [cart_id]="currentCartID"></app-cart>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="container">
+                <div class="storeView">
+                    <div class="row">
+                        <app-categories [selectedCategory]="this.selectedCategory"></app-categories>
+                    </div>
+                    <div id="searchProductStyle"  class="row">
+                        <div id="searchProductFont">
+                            <form class="example-form">
+                                <mat-form-field id="formStyleField"  class="example-full-width" appearance="fill">
+                                    <mat-label>Search prouduct</mat-label>
+                                    <input type="text" matInput [formControl]="searchProductFormControl"
+                                        placeholder="Search product">
+                                    <button *ngIf="searchProductFormControl.value" matSuffix mat-icon-button
+                                        aria-label="Clear" (click)="searchProductFormControl.setValue('')">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="!((products$|async|json)==='[]'); else elseBlock">
+                        <app-products-paginator [is_admin_mode]="this.is_admin_mode" [cart_id]="this.currentCartID"
+                            [products]="(products$|async) || []" [pageSize]="10">
+                        </app-products-paginator>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class="noProducts">
+                            <h2>no products to find</h2>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isLoading">
+        <div class="loadingDiv">
+            <h2>Loading store...</h2>
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</div>

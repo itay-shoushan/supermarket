@@ -1,0 +1,10 @@
+<div class="cartItem">
+    <h3>{{cart_product.name}}</h3>
+    <div class="cartItemDetails">
+        <p>price: {{cart_product.price | currency}}</p>
+        <p>quantity: {{cart_product.quantity}}</p>
+        <p>total: {{cart_product.total_price | currency}}</p>
+        <button *ngIf="!inCheckout" [disabled]="inCheckout" (click)="removeProduct(cart_product)" mat-stroked-button
+            color="warn">delete</button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+.totalPrice {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: fit-content;
+    padding: 10px 20px;
+    margin-left: 12px;
+    color: white;
+    background-color: #3f51b5;
+}
+
+.cartSection {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+.cartHeader {
+    margin-top: 6px;
+    margin-left: 6px;
+}
+
+.clearCartBtn {
+    height: 100%;
+    margin-top: 10px;
+}
+
+.cartDetails {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 400px;
+}
+
+.checkoutBtn {
+    position: absolute;
+    bottom: 15px;
+    margin-left: 10px;
+}
+
+.emptyCart {
+    margin: 20px;
+}

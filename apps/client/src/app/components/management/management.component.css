@@ -1,0 +1,24 @@
+mat-form-field {
+    margin: 10px;
+
+}
+
+.submitBtn {
+    margin: 10px;
+}
+
+.submitBtn button {
+    margin-right: 15px;
+}
+
+.exitEditBtn {
+    margin-left: 15px;
+}
+
+.adminHeader {
+    margin-top: 10px;
+}
+
+.adminBackground {
+    background-color: lightblue;
+}

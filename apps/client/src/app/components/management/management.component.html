@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="row">
+        <h1 class="adminHeader">Admin Page</h1>
+    </div>
+    <div class="row adminBackground">
+        <div class="col-4">
+            <h2>{{editMode ? "edit product: " + currentProduct?.name : 'Add Product'}}
+                <button class="exitEditBtn" (click)="exitEditing(updateProducts)" mat-raised-button color="warn"
+                    *ngIf="editMode"> exit edit
+                </button>
+            </h2>
+            <div>
+                <form #updateProducts="ngForm" (submit)="submit(updateProducts)" class="example-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product Name</mat-label>
+                        <input type="text" required name="product_name"
+                            [(ngModel)]="currentProduct ? currentProduct.name : this.updateProducts.value.product_name"
+                            #product_name="ngModel" ngModel matInput>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product Category</mat-label>
+                        <mat-select
+                            [(ngModel)]=" currentProduct ? currentProduct.category_id: this.updateProducts.value.category_id"
+                            #category_id="ngModel" name="category_id" ngModel required>
+                            <mat-option disabled="true" value="''">Select Category</mat-option>
+                            <mat-option *ngFor="let category of (categories$|async)" [value]="category.id">
+                                {{category.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="category_id.value ===''">Category must be picked
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product Price</mat-label>
+                        <input type="number" required name="product_price"
+                            [(ngModel)]=" currentProduct?currentProduct.price: this.updateProducts.value.product_price"
+                            #product_price="ngModel" ngModel matInput>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product URL</mat-label>
+                        <input required name="product_url"
+                            [(ngModel)]="currentProduct ? currentProduct.picture : this.updateProducts.value.product_url"
+                            #product_url="ngModel" ngModel matInput>
+                    </mat-form-field>
+                    <div class="submitBtn">
+                        <button [disabled]="!updateProducts.valid" mat-raised-button color="primary" type="submit">
+                            {{editMode ? 'Edit Product' : 'Add Product'}}
+                        </button>
+                        <button (click)="clearForm(updateProducts)" mat-raised-button color="warn"> clear form
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <div>
+                    <app-categories [selectedCategory]="this.selectedCategory"></app-categories>
+                </div>
+            </div>
+            <div class="row" *ngIf="!((products$|async|json)==='[]'); else elseBlock">
+                <app-products-paginator [is_admin_mode]="true" (editProductEvent)="editProduct($event)"
+                    [products]="(products$|async) || []" [pageSize]="10">
+                </app-products-paginator>
+            </div>
+            <ng-template #elseBlock>
+                no products
+            </ng-template>
+        </div>
+    </div>
+</div>

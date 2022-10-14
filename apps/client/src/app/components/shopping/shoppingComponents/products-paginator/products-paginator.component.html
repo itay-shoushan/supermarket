@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <div id="productPaginator">
+            <div *ngFor="let product of products | paginate: {
+                itemsPerPage: this.pageSize,
+                currentPage: p}" class={{this.columnSize}}>
+                <app-product-card [is_admin_mode]="this.is_admin_mode" (editProductEvent)="editProduct($event)"
+                    [cart_id]="this.cart_id" [product]="product"></app-product-card>
+            </div>
+        </div>
+    </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

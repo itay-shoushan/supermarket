@@ -1,0 +1,28 @@
+<div *ngIf="products_in_cart$|async">
+    <div class="cartSection">
+        <h1 class="cartHeader"> my cart</h1>
+        <button class="clearCartBtn" *ngIf="!inCheckout && ((total_cart_price$|async))" mat-stroked-button color="warn"
+            (click)="clearCart(this.cart_id)"> CLEAR ALL PRODUCTS </button>
+        <button *ngIf="inCheckout" (click)="backToShopping(this.cart_id)" mat-button>
+            back to shop
+        </button>
+    </div>
+    <p class="totalPrice">total:
+        {{total_cart_price$|async|currency}}</p>
+    <div class="emptyCart" *ngIf="isCartEmpty()">
+        <h2>your cart is empty</h2>
+    </div>
+    <div>
+        <div class="cartDetails">
+            <div *ngFor="let product of products_in_cart$ | async">
+                <app-cart-item [inCheckout]="this.inCheckout" [cart_product]="product"></app-cart-item>
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+        <div class="checkoutBtn" *ngIf="!inCheckout">
+            <button [disabled]="!(total_cart_price$|async)" (click)="moveToCheckout()" mat-button> move to checkout
+            </button>
+        </div>
+
+    </div>
+</div>

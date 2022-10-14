@@ -1,0 +1,7 @@
+<div class="categoriesContainer">
+    <button *ngFor="let category of categories$|async" (click)="filterCategory(category.id)" class="category"
+        mat-stroked-button>
+        <p *ngIf="(category.id === this.selectedCategory)" class="selectedCategory"> {{category.name}}</p>
+        <p *ngIf="!(category.id === this.selectedCategory)"> {{category.name}}</p>
+    </button>
+</div>

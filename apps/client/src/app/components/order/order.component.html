@@ -1,0 +1,115 @@
+<div class="container">
+    <div class="row orderDiv">
+        <div class="col-4">
+            <div class="container">
+                <div *ngIf="currentCartID" class="row">
+                    <div class="cartView">
+                        <app-cart [inCheckout]="true" [cart_id]="currentCartID"></app-cart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div *ngIf="!receipt" class="row">
+                <div class="orderView">
+                    <form #checkoutForm="ngForm" (submit)="checkout(checkoutForm)">
+                        <div class="example-form">
+                            <h1 class="orderHeader">Checkout</h1>
+                            <h3 id="orderD">Order Details:</h3>
+                            <div class="stageA">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Select City</mat-label>
+                                    <mat-select #user_city="ngModel" name="user_city" ngModel required>
+                                        <mat-option value="this.currentBuyer.city">{{this.currentBuyer.city}}
+                                        </mat-option>
+                                        <mat-option disabled="true" value="''">Select City</mat-option>
+                                        <mat-option *ngFor="let city of cities" [value]="city">{{city}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="user_city.value ===''">City must be picked
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Street</mat-label>
+                                    <input
+                                        [(ngModel)]="this.currentBuyer ? this.currentBuyer.street : this.checkoutForm.value.user_street"
+                                        #user_street="ngModel" minlength="2" maxlength="18" required type="text"
+                                        name="user_street" matInput placeholder="Street" ngModel>
+                                    <mat-error *ngIf="user_street.invalid">Street must be filled
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Shipping Date</mat-label>
+                                    <input max="{{maxDate | date:'yyyy-MM-dd'}}"
+                                        min="{{currentDate | date:'yyyy-MM-dd'}}" #shipping_date="ngModel" required
+                                        type="date" name="shipping_date" matInput placeholder="Shipping Date" ngModel
+                                        (change)="validate(shipping_date.value)">
+                                    <mat-error *ngIf="shipping_date.invalid">Date must be filled
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div *ngIf="!isDateValid">
+                                <h4 id="dateErr"> the selected delivery date is unavailable,
+                                    please select another day.
+                                </h4>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="stageB">
+                                <h1>Payment</h1>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Credit Card</mat-label>
+                                    <input #user_credit_card="ngModel" min="1111" max="9999" minlength="4" maxlength="4"
+                                        required type="number" name="user_credit_card" matInput
+                                        placeholder="Credit Card" ngModel>
+                                    <mat-error *ngIf="user_credit_card.invalid">Please enter 4 last digits only
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="stageC">
+                                <button [disabled]="checkoutForm.invalid || !this.isDateValid" type="submit"
+                                    mat-raised-button color="primary">submit</button>
+                                <mat-error class="errorSign" *ngIf="checkoutForm.invalid"> please fill all the fields to
+                                    submit the order
+                                </mat-error>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div *ngIf="receipt && (this.products_in_cart$|async) && (this.currentOrder)" class="row">
+                <div class="orderView">
+                    <h2 class="receiptHeader">receipt <button (click)="navigateHome()" mat-button color="primary">Back
+                            Home</button> </h2>
+                    <h4> your order number: {{this.currentOrder}} </h4>
+                    <h4> order details: </h4>
+                    <table mat-table [dataSource]="(this.products_in_cart$|async) || []" class="mat-elevation-z8">
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="price">
+                            <th mat-header-cell *matHeaderCellDef> price </th>
+                            <td mat-cell *matCellDef="let element"> {{element.price | currency}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="quantity">
+                            <th mat-header-cell *matHeaderCellDef> quantity </th>
+                            <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="total_price">
+                            <th mat-header-cell *matHeaderCellDef> total_price </th>
+                            <td mat-cell *matCellDef="let element"> {{element.total_price | currency}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="receiptColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: receiptColumns;"></tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

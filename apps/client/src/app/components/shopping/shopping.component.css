@@ -1,0 +1,39 @@
+.cartHandler {
+    border: 0.5px solid black;
+    left: 350px;
+    background-color: white;
+    width: max-content;
+}
+
+#shoppingDiv {
+    height: 100%;
+}
+
+#searchProductStyle {
+    margin: 5px;
+}
+#searchProductFont{
+    font-size: 12px;
+}
+#formStyleField{
+    height: 20px;
+}
+.cartView {
+    background-color: lightblue;
+    height: 560px;
+    margin-top: 10px;
+}
+
+.storeView {
+    background-color: lightblue;
+    height: 560px;
+    margin-top: 10px;
+}
+
+.loadingDiv {
+    margin: 30px;
+}
+
+.noProducts {
+    margin: 25px;
+}
