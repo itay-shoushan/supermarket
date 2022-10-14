@@ -9,8 +9,8 @@ As admin you can also edit your products in the store
 
 ## Images
 
-![Alt text](./apps/images/shopping_1.png?raw=true "Title" | width=100 )
-![Alt text](./apps/images/shopping_2.png?raw=true "Title" | width=100 )
+![Alt text](./apps/images/shopping_1.png | width=100 )
+![Alt text](./apps/images/shopping_2.png | width=100 )
 
 
 ## Getting Started
