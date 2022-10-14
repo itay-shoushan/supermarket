@@ -4,12 +4,13 @@ Online SuperMarket
 
 ## Description
 
-On my site, you can register and order some supermarket products<br>
-As admin you can also edit your products in the store
+On my site, you can register and order some supermarket products.<br>
+As admin you can also edit your products in the store.<br>
+Technologies I used in this project: Angular, Node.JS, MySQL, Docker.
 
 ## Images
 
-<img src="./apps/images/shopping_1.png" width="400" height="210"> <img src="./apps/images/shopping_2.png" width="400" height="210">
+<img src="./apps/images/shopping_1.png" width="400" height="220"> <img src="./apps/images/shopping_2.png" width="400" height="220">
 
 <!-- ![Alt text](./apps/images/shopping_1.png?raw=true ) -->
 <!-- ![Alt text](./apps/images/shopping_2.png?raw=true ) -->
