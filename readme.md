@@ -9,7 +9,7 @@ As admin you can also edit your products in the store
 
 ## Images
 
-<img src="./apps/images/shopping_1.png" width="400" height="200"> <img src="./apps/images/shopping_2.png" width="400" height="200">
+<img src="./apps/images/shopping_1.png" width="400" height="210"> <img src="./apps/images/shopping_2.png" width="400" height="210">
 
 <!-- ![Alt text](./apps/images/shopping_1.png?raw=true ) -->
 <!-- ![Alt text](./apps/images/shopping_2.png?raw=true ) -->
