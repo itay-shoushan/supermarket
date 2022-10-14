@@ -7,6 +7,17 @@ Online SuperMarket
 On my site, you can register and order some supermarket products<br>
 As admin you can also edit your products in the store
 
+## Images
+
+<<<<<<< HEAD
+![Alt text](./apps/images/shopping_1.png?raw=true "Title" )
+![Alt text](./apps/images/shopping_2.png?raw=true "Title" )
+=======
+![Alt text](./apps/images/shopping_1.png | width=100 )
+![Alt text](./apps/images/shopping_2.png | width=100 )
+>>>>>>> 40acc81f578cea5a020b28304919876dd3744f61
+
+
 ## Getting Started
 
 ### Dependencies
@@ -19,18 +30,20 @@ git clone my reposetory to your local folder.
 
 ### Executing program
 
-*open the terminal
-* In the dev-apps folder run the command
+* open the terminal and run the following commands:
 ```
+cd dev-apps
 docker compose up
 ```
-* In the apps folder get into 'client' folder run the command
+* open new terminal and run the following commands:
 ```
+cd apps\server
 npm install
 npm run all-slim
 ```
-* In the apps folder get into 'client' folder run the command
+* open new terminal and run the following commands:
 ```
+cd apps\client
 npm install
 npm start
 ```
