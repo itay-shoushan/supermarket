@@ -19,13 +19,13 @@
     height: 20px;
 }
 .cartView {
-    background-color: lightblue;
+    background-color: rgb(70, 143, 228);
     height: 560px;
     margin-top: 10px;
 }
 
 .storeView {
-    background-color: lightblue;
+    background-color: rgb(70, 143, 228);
     height: 560px;
     margin-top: 10px;
 }

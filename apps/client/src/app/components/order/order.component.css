@@ -1,5 +1,5 @@
 mat-grid-tile {
-    background: lightblue;
+    background-color: rgb(70, 143, 228);
 }
 
 mat-grid-list {
@@ -20,12 +20,12 @@ th {
 }
 
 #dateErr {
-    color: red;
+    color: rgb(123, 255, 185);
     margin-left: 20px;
 }
 
 .cartView {
-    background-color: lightblue;
+    background-color: rgb(70, 143, 228);
     height: 560px;
     margin-top: 10px;
 }
@@ -35,7 +35,7 @@ th {
 }
 
 .orderView {
-    background-color: lightblue;
+    background-color: rgb(70, 143, 228);
     height: 560px;
     margin-top: 10px;
 }

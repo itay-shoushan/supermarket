@@ -33,6 +33,6 @@ ng-container {
     padding-top: 20px;
     width: 50%;
     margin: 10px;
-    background-color: lightblue;
+    background-color: rgb(70, 143, 228);
     height: 530px;
 }
